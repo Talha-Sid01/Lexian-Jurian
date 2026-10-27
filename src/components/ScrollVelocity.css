@@ -1,0 +1,20 @@
+.parallax {
+  overflow: hidden;
+  margin: 0;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.scroller {
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  white-space: nowrap;
+  flex-wrap: nowrap;
+}
+
+.scroller span {
+  display: block;
+  margin-right: 30px;
+}

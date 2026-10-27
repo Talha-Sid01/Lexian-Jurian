@@ -1,0 +1,284 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Colors - Light Theme */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 218 100% 16%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 218 80% 25%;
+    --color-accent: #00BFFF;
+    --accent-cyan: 195 100% 50%;
+    --accent-cyan-dark: 198 100% 38%;
+    --accent-cyan-light: 195 100% 65%;
+    --accent-gold: 195 100% 50%;
+    --secondary: 210 40% 98%;
+    --secondary-foreground: 212 67% 20%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 46.9%;
+    --accent: 212 47% 35%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 212 67% 20%;
+    --radius: 0.75rem;
+    
+    /* Gradients */
+    --primary-gradient: linear-gradient(135deg, hsl(218, 100%, 16%), hsl(218, 80%, 25%));
+    --hero-gradient: linear-gradient(135deg, hsl(218, 100%, 16%) 0%, hsl(218, 80%, 20%) 100%);
+    --surface-gradient: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(210, 40%, 98%) 100%);
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 29, 81, 0.1);
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 20px rgba(0, 29, 81, 0.08);
+    --shadow-medium: 0 8px 30px rgba(0, 29, 81, 0.12);
+    --shadow-large: 0 20px 60px rgba(0, 29, 81, 0.15);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 212 67% 8%;
+    --foreground: 0 0% 98%;
+    --card: 212 67% 8%;
+    --card-foreground: 0 0% 98%;
+    --popover: 212 67% 8%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 212 67% 20%;
+    --secondary: 212 47% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 212 47% 15%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 212 47% 20%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 212 47% 15%;
+    --input: 212 47% 15%;
+    --ring: 0 0% 83.1%;
+    
+    /* Dark mode gradients */
+    --primary-gradient: linear-gradient(135deg, hsl(0, 0%, 98%), hsl(218, 80%, 20%));
+    --hero-gradient: linear-gradient(135deg, hsl(218, 100%, 8%) 0%, hsl(218, 80%, 15%) 100%);
+    --surface-gradient: linear-gradient(135deg, hsl(218, 100%, 8%) 0%, hsl(218, 80%, 12%) 100%);
+    
+    --shadow-soft: 0 4px 20px -2px hsl(211 100% 8% / 0.3);
+    --shadow-medium: 0 8px 32px -4px hsl(211 100% 8% / 0.4);
+    --shadow-large: 0 16px 64px -8px hsl(211 100% 8% / 0.5);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  [id] {
+    scroll-margin-top: 115px;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+}
+
+@layer components {
+  /* Animation Keyframes */
+  @keyframes glareSlide {
+    0% {
+      transform: translateX(-100%) skewX(-15deg);
+    }
+    100% {
+      transform: translateX(100%) skewX(-15deg);
+    }
+  }
+  
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes marqueeFast {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 40s linear infinite;
+  }
+
+  .animate-marquee-fast {
+    animation: marqueeFast 20s linear infinite;
+  }
+
+  .animate-marquee-faster {
+    animation: marquee 30s linear infinite;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  
+  .animate-slide-in-right {
+    animation: slideInRight 0.8s ease-out forwards;
+  }
+  
+  .animate-bounce-in {
+    animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out forwards;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+  
+  .glass-effect {
+    @apply backdrop-blur-sm bg-white/10 border border-white/20;
+  }
+  
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-lg;
+  }
+  
+  .glare-effect {
+    @apply transition-all duration-300;
+  }
+  
+  .glare-effect:hover {
+    border-color: hsl(218 100% 16%);
+    box-shadow: 0 0 0 2px hsl(218 100% 16%);
+  }
+  
+  .scroll-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: var(--transition-smooth);
+  }
+  
+  .scroll-animate.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee,
+  .animate-marquee-fast,
+  .animate-marquee-faster {
+    animation: none !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid #00BFFF;
+  outline-offset: 2px;
+}
