@@ -1,116 +1,111 @@
-import { Card, CardContent } from "@/components/ui/card";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { TrendingUp, Clock, Target, ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { ArrowRight, Sparkles } from "lucide-react";
+import Folder, { FolderItem } from "./Folder";
 
-const CaseStudiesSection = () => {
+const CASE_STUDIES: FolderItem[] = [
+  {
+    id: "contract-breach-recovery",
+    title: "Contract Breach Recovery",
+    description:
+      "Successful recovery from supplier who failed to deliver critical components on schedule.",
+    recovered: "₹56 Lakhs",
+    duration: "8 Months",
+    successRate: "95%",
+    category: "Commercial Breach",
+  },
+  {
+    id: "investor-misrepresentation",
+    title: "Investor Misrepresentation",
+    description:
+      "Recovery for investors who were misled about a company's financial position prior to investment.",
+    recovered: "₹42 Lakhs",
+    duration: "14 Months",
+    successRate: "100%",
+    category: "Capital Protection",
+  },
+  {
+    id: "ip-infringement",
+    title: "Long-Pending Token Refund Resolution",
+    description: "Real Estate Booking Dispute – Lodha Group Project",
+    recovered: "₹45 Lakhs",
+    duration: "3 Months",
+    successRate: "98%",
+    category: "Real Estate Dispute",
+  },
+  {
+    id: "partnership-dissolution",
+    title: "Partnership Dissolution",
+    description:
+      "Complex partnership dispute involving asset division and business valuation.",
+    recovered: "₹18 Lakhs",
+    duration: "13 Months",
+    successRate: "Settlement",
+    category: "Partnership Exit",
+  },
+];
+
+const CaseStudiesSection: React.FC = () => {
   const navigate = useNavigate();
 
-  // These 4 are the inbuilt case studies - they match the hardcoded IDs
-  const caseStudies = [
-    {
-      id: "contract-breach-recovery",
-      title: "Contract Breach Recovery",
-      description: "Successful recovery from supplier who failed to deliver critical components on schedule.",
-      recovered: "₹56 Lakhs",
-      duration: "8 Months",
-      successRate: "95%"
-    },
-    {
-      id: "investor-misrepresentation",
-      title: "Investor Misrepresentation",
-      description: "Recovery for investors who were misled about a company's financial position prior to investment.",
-      recovered: "₹42 Lakhs",
-      duration: "14 Months",
-      successRate: "100%"
-    },
-    {
-      id: "ip-infringement",
-      title: "Long-Pending Token Refund Resolution",
-      description: "Real Estate Booking Dispute – Lodha Group Project",
-      recovered: "₹45 Lakhs",
-      duration: "3 Months",
-      successRate: "98%"
-    },
-    {
-      id: "partnership-dissolution",
-      title: "Partnership Dissolution",
-      description: "Complex partnership dispute involving asset division and business valuation.",
-      recovered: "₹18 Lakhs",
-      duration: "13 Months",
-      successRate: "Settlement"
-    }
-  ];
+  const handleCaseStudyClick = (item: FolderItem, _index: number) => {
+    navigate(`/proven-results/${item.id}`);
+  };
 
   return (
-    <section className="py-12 md:py-16 bg-background">
-      <div className="container mx-auto px-6 lg:px-12">
-        <div className="text-center mb-8 md:mb-12 scroll-animate">
-          <Badge className="mb-3 md:mb-4 bg-primary/10 text-primary border-primary/20 text-xs sm:text-sm px-4 py-1">
+    <section
+      id="case-studies"
+      aria-label="Proven Results - Interactive Case Study Folder"
+      className="relative py-12 sm:py-16 md:py-20 bg-gradient-to-b from-[#F9FBFE] via-white to-[#F2F7FD] overflow-hidden select-none"
+    >
+      {/* Ambient background glows for spatial depth */}
+      <div
+        className="absolute inset-0 pointer-events-none overflow-hidden"
+        aria-hidden="true"
+      >
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] sm:w-[960px] h-[460px] rounded-full bg-gradient-to-tr from-[#00BFFF]/10 via-[#001d51]/5 to-transparent blur-3xl opacity-75" />
+        <div className="absolute right-[8%] top-[25%] w-[300px] h-[300px] rounded-full bg-[#00BFFF]/5 blur-2xl" />
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+        {/* Section Header */}
+        <div className="text-center mb-6 sm:mb-8">
+          <Badge className="mb-2.5 sm:mb-3 bg-primary/10 text-primary border-primary/20 text-xs sm:text-sm px-4 py-1 rounded-full font-semibold">
+            <Sparkles className="w-3.5 h-3.5 mr-1.5 text-[#00BFFF]" />
             Case Studies
           </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-3 md:mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-primary mb-2 sm:mb-2.5 tracking-tight">
             Proven Results
           </h2>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
             Real cases, real recoveries. See how we've helped businesses recover substantial amounts through strategic litigation finance.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 max-w-5xl mx-auto">
-          {caseStudies.map((study) => (
-            <Card key={study.id} className="glare-effect hover-lift bg-card border border-border shadow-sm scroll-animate rounded-xl">
-              <CardContent className="p-5 md:p-6">
-                <div className="mb-4 md:mb-5">
-                  <h3 className="text-lg md:text-xl font-semibold text-primary mb-1.5 md:mb-2">
-                    {study.title}
-                  </h3>
-                  <p className="text-foreground/70 text-xs md:text-sm leading-relaxed">
-                    {study.description}
-                  </p>
-                </div>
+        {/* ======================================================== */}
+        {/* INTERACTIVE FOLDER COMPONENT                             */}
+        {/* ======================================================== */}
+        <Folder
+          label="Proven Results"
+          items={CASE_STUDIES}
+          onItemClick={(item, index) => handleCaseStudyClick(item, index)}
+          mode="book"
+          variant="glass"
+          color="#7aa7ff"
+        />
 
-                <div className="grid grid-cols-3 gap-2 md:gap-3 mb-4 md:mb-5">
-                  <div className="text-center p-2.5 md:p-3.5 bg-primary/5 rounded-lg">
-                    <TrendingUp className="mx-auto mb-1 md:mb-1.5 h-4 w-4 text-primary" />
-                    <div className="font-bold text-primary text-sm md:text-base">{study.recovered}</div>
-                    <div className="text-[10px] md:text-xs text-foreground/60 mt-0.5">Recovered</div>
-                  </div>
-                  <div className="text-center p-2.5 md:p-3.5 bg-accent/10 rounded-lg">
-                    <Clock className="mx-auto mb-1 md:mb-1.5 h-4 w-4 text-accent" />
-                    <div className="font-bold text-accent text-sm md:text-base">{study.duration}</div>
-                    <div className="text-[10px] md:text-xs text-foreground/60 mt-0.5">Duration</div>
-                  </div>
-                  <div className="text-center p-2.5 md:p-3.5 bg-green-50 border border-green-100 rounded-lg">
-                    <Target className="mx-auto mb-1 md:mb-1.5 h-4 w-4 text-green-600" />
-                    <div className="font-bold text-green-600 text-sm md:text-base">{study.successRate}</div>
-                    <div className="text-[10px] md:text-xs text-foreground/60 mt-0.5">Success</div>
-                  </div>
-                </div>
-
-                <Button
-                  variant="outline"
-                  className="w-full h-10 text-xs sm:text-sm font-medium hover:border-primary/40 hover:bg-primary/5 rounded-lg transition-colors"
-                  onClick={() => navigate(`/proven-results/${study.id}`)}
-                >
-                  View Details
-                  <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <div className="text-center mt-10 md:mt-12 scroll-animate">
-          <Button 
+        {/* View More Results Button */}
+        <div className="text-center mt-6 sm:mt-8">
+          <Button
             size="lg"
             variant="outline"
-            className="text-sm md:text-base font-semibold px-6 py-2.5 h-11 md:h-12 rounded-xl hover:bg-primary hover:text-white transition-all duration-200"
-            onClick={() => navigate('/proven-results')}
+            className="text-xs sm:text-sm md:text-base font-semibold px-6 py-2.5 h-10 sm:h-11 md:h-12 rounded-xl border-slate-300 hover:border-[#00BFFF] hover:bg-primary/5 text-primary transition-all duration-200 shadow-xs"
+            onClick={() => navigate("/proven-results")}
           >
-            View More Results
-            <ArrowRight className="ml-2 h-4 w-4" />
+            Explore All Proven Results
+            <ArrowRight className="ml-2 h-4 w-4 text-[#00BFFF]" />
           </Button>
         </div>
       </div>
