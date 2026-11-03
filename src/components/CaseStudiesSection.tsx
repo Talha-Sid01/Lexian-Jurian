@@ -28,7 +28,7 @@ const CASE_STUDIES: FolderItem[] = [
   },
   {
     id: "ip-infringement",
-    title: "Long-Pending Token Refund Resolution",
+    title: "Token Refund Resolution",
     description: "Real Estate Booking Dispute – Lodha Group Project",
     recovered: "₹45 Lakhs",
     duration: "3 Months",
@@ -49,10 +49,19 @@ const CASE_STUDIES: FolderItem[] = [
 
 const CaseStudiesSection: React.FC = () => {
   const navigate = useNavigate();
+  const [windowWidth, setWindowWidth] = React.useState(
+    typeof window !== "undefined" ? window.innerWidth : 1200
+  );
 
-  const handleCaseStudyClick = (item: FolderItem, _index: number) => {
-    navigate(`/proven-results/${item.id}`);
-  };
+  React.useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize, { passive: true });
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isMobile = windowWidth < 640;
+  const isTablet = windowWidth >= 640 && windowWidth < 1024;
+  const folderSize = isMobile ? 1.25 : isTablet ? 1.6 : 1.95;
 
   return (
     <section
@@ -71,7 +80,7 @@ const CaseStudiesSection: React.FC = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-6 sm:mb-8">
+        <div className="text-center mb-8 sm:mb-12 md:mb-14">
           <Badge className="mb-2.5 sm:mb-3 bg-primary/10 text-primary border-primary/20 text-xs sm:text-sm px-4 py-1 rounded-full font-semibold">
             <Sparkles className="w-3.5 h-3.5 mr-1.5 text-[#00BFFF]" />
             Case Studies
@@ -87,14 +96,23 @@ const CaseStudiesSection: React.FC = () => {
         {/* ======================================================== */}
         {/* INTERACTIVE FOLDER COMPONENT                             */}
         {/* ======================================================== */}
-        <Folder
-          label="Proven Results"
-          items={CASE_STUDIES}
-          onItemClick={(item, index) => handleCaseStudyClick(item, index)}
-          mode="book"
-          variant="glass"
-          color="#7aa7ff"
-        />
+        <div className="flex justify-center items-center pt-8 sm:pt-14 md:pt-16 pb-4 sm:pb-8 overflow-visible min-h-[460px] sm:min-h-[500px]">
+          <Folder
+            label="Commercial Cases"
+            items={CASE_STUDIES}
+            mode="flap"
+            variant="solid"
+            color="#00BFFF"
+            paperColor="#ffffff"
+            tabPosition="center"
+            layout={isMobile ? "stack" : "spread"}
+            size={folderSize}
+            zoomOnClick={true}
+            draggable={false}
+            closeOnOutsideClick={true}
+            theme="light"
+          />
+        </div>
 
         {/* View More Results Button */}
         <div className="text-center mt-6 sm:mt-8">

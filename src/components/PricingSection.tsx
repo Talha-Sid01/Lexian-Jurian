@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Check, Star } from "lucide-react";
 import LegalPlanPopup from "./LegalPlanPopup";
+import PriceTagReveal from "./PriceTagReveal";
 
 const PricingSection = () => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
@@ -137,9 +138,14 @@ const PricingSection = () => {
                 <div className="space-y-1.5">
                   <h3 className="text-lg md:text-xl font-semibold text-primary">{plan.name}</h3>
                   <p className="text-xs sm:text-sm text-muted-foreground">{plan.subtitle}</p>
-                  <div className="py-3">
-                    <div className="text-3xl md:text-4xl font-bold text-primary">{plan.price}</div>
-                    <div className="text-xs sm:text-sm text-muted-foreground mt-0.5">{plan.priceNote}</div>
+                  <div className="py-2">
+                    <PriceTagReveal
+                      price={plan.price}
+                      priceNote={plan.priceNote}
+                      planName={plan.name}
+                      popular={plan.popular}
+                      index={index}
+                    />
                   </div>
                 </div>
               </CardHeader>
