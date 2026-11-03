@@ -213,7 +213,7 @@ const measureFolder = (
       : tabPosition === 'center'
         ? (w - tabW) / 2
         : w - corners[1] - 5 * scale - shoulder - tabW;
-  const docW = book ? w * 0.8 : w * 0.54;
+  const docW = book ? w * 0.8 : w * 0.49;
   return {
     book,
     scale,
@@ -228,7 +228,7 @@ const measureFolder = (
     frontTop,
     frontH: tabH + h - frontTop,
     docW,
-    docH: docW * (book ? 1.28 : 1.22),
+    docH: docW * (book ? 1.28 : 1.36),
   };
 };
 
@@ -889,13 +889,19 @@ const CaseStudyCard = ({
   onCloseFocus?: (e: React.MouseEvent) => void;
   onNavigate?: (item: FolderItem) => void;
 }) => {
+  const successText = item.successRate
+    ? item.successRate.includes('%')
+      ? `${item.successRate} Success`
+      : item.successRate
+    : 'Verified';
+
   return (
     <div className={`folder-case-card ${isFocused ? 'is-focused' : ''}`}>
-      {/* Top File Divider & Category Badge */}
+      {/* 1. TOP: Category Badge & File Number */}
       <div className="folder-case-header">
-        <span className="folder-case-badge">
+        <span className="folder-case-badge" title={item.category || 'Commercial Dispute'}>
           <ShieldCheck className="folder-case-badge-icon" />
-          <span>{item.category || 'Commercial Case'}</span>
+          <span>{item.category || 'Commercial Dispute'}</span>
         </span>
         <div className="folder-case-header-right">
           <span className="folder-case-file-no">#{String(index + 1).padStart(2, '0')}</span>
@@ -910,40 +916,37 @@ const CaseStudyCard = ({
               title="Close card"
               aria-label="Close card"
             >
-              <X className="w-3.5 h-3.5" />
+              <X className="w-3 h-3" />
             </button>
           )}
         </div>
       </div>
 
-      {/* Title */}
-      <h3 className="folder-case-title">{item.title}</h3>
+      {/* 2. MIDDLE: Case Study Title & Short Description */}
+      <div className="folder-case-body">
+        <h3 className="folder-case-title" title={item.title}>
+          {item.title}
+        </h3>
+        <p className="folder-case-desc" title={item.description}>
+          {item.description}
+        </p>
+      </div>
 
-      {/* Description shown when focused */}
-      {isFocused && item.description && (
-        <p className="folder-case-desc">{item.description}</p>
-      )}
-
-      {/* Hero Outcome Highlight Box */}
-      <div className="folder-case-hero-stat">
-        <div className="folder-case-stat-top">
-          <TrendingUp className="folder-case-stat-icon" />
-          <span className="folder-case-stat-amount">{item.recovered}</span>
+      {/* 3. METRICS: 2-Column Balanced Metric Tiles */}
+      <div className="folder-case-metrics">
+        <div className="folder-case-metric-cell">
+          <span className="folder-case-metric-label">RECOVERED</span>
+          <span className="folder-case-metric-value">{item.recovered}</span>
+          <span className="folder-case-metric-sub success">{successText}</span>
         </div>
-        <div className="folder-case-stat-meta">
-          <span>Recovered</span>
-          <span className="folder-case-dot">•</span>
-          <span>{item.duration}</span>
-          {isFocused && item.successRate && (
-            <>
-              <span className="folder-case-dot">•</span>
-              <span className="text-emerald-600 font-semibold">{item.successRate} Success</span>
-            </>
-          )}
+        <div className="folder-case-metric-cell">
+          <span className="folder-case-metric-label">TIMELINE</span>
+          <span className="folder-case-metric-value duration">{item.duration}</span>
+          <span className="folder-case-metric-sub meta">Resolution</span>
         </div>
       </div>
 
-      {/* Action Area */}
+      {/* 4. BOTTOM: Clearly Aligned View Details Action */}
       <div className="folder-case-footer">
         {isFocused ? (
           <div className="folder-case-btn-group">
@@ -955,8 +958,8 @@ const CaseStudyCard = ({
                 onNavigate?.(item);
               }}
             >
-              <span>View Full Case Study</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <span>View Case Study</span>
+              <ArrowRight className="w-3 h-3" />
             </button>
             <button
               type="button"
@@ -971,7 +974,7 @@ const CaseStudyCard = ({
           </div>
         ) : (
           <div className="folder-case-hint">
-            <span>View Details</span>
+            <span className="folder-case-hint-text">View Details</span>
             <ArrowRight className="folder-case-hint-arrow" />
           </div>
         )}
@@ -1104,58 +1107,68 @@ const placeFlap = (
   g: any,
   pointer: number | null
 ) => {
-  const rest = FLAP_REST[rank] ?? FLAP_REST[FLAP_REST.length - 1];
-  const floor = g.tabH + g.h - 5 * g.scale - g.docH / 2;
   const mid = (count - 1) / 2;
+  const offset = rank - mid;
+  const floor = g.tabH + g.h - 8 * g.scale - g.docH / 2;
+
   if (phase === 'open') {
-    const lift = g.tabH + g.h * 0.12;
+    const lift = g.tabH + g.h * 0.1;
     if (layout === 'stack') {
       const strip = Math.min(
-        30 * g.scale,
-        (g.h * 0.62) / Math.max(1, count - 1)
+        26 * g.scale,
+        (g.h * 0.56) / Math.max(1, count - 1)
       );
-      const fit = 1.04 - rank * 0.05;
+      const fit = 1.0 - rank * 0.03;
       return {
         x: g.w / 2,
-        y: g.tabH + g.h * 0.1 - rank * strip - (g.docH * (1.04 - fit)) / 2,
-        z: -rank * 18 * g.scale,
+        y: g.tabH + g.h * 0.08 - rank * strip,
+        z: -rank * 14 * g.scale,
         r: 0,
         ry: 0,
         s: fit,
       };
     }
+
+    // Symmetrical layout with guaranteed positive GAP between cards (zero overlap!)
     const gap = 12 * g.scale;
-    const fit = Math.min(
-      0.94,
-      (g.w * 2.3 - gap * (count - 1)) / (count * g.docW)
-    );
-    const step = g.docW * fit + gap;
-    const tidy = layout === 'row';
+    const step = g.docW + gap;
+    const arc = Math.pow(offset / Math.max(1, mid), 2) * (2.4 * g.scale);
     return {
-      x: g.w / 2 + (rank - mid) * step,
-      y: lift + (tidy ? 0 : SPREAD_DROP[rank] * g.h * 0.7),
-      z: 0,
-      r: tidy ? 0 : SPREAD_TURN[rank] * 0.55,
+      x: g.w / 2 + offset * step,
+      y: lift + (layout === 'row' ? 0 : arc),
+      z: rank * 2 * g.scale,
+      r: layout === 'row' ? 0 : offset * 0.9,
       ry: 0,
-      s: fit,
+      s: 0.98,
     };
   }
-  const part = phase === 'receive' ? 1.7 : phase === 'peek' ? 1.3 : 1;
-  const x = g.w / 2 + rest.x * g.w * part;
-  if (phase === 'rest')
-    return { x, y: floor - rest.rise * g.h, z: 0, r: rest.r, ry: 0, s: 1 };
+
+  // Closed / Rest state: neatly tucked inside the folder pocket!
+  if (phase === 'rest') {
+    return {
+      x: g.w / 2 + offset * 0.012 * g.w,
+      y: floor + rank * 1.2 * g.scale,
+      z: rank * 1.5 * g.scale,
+      r: offset * 0.5,
+      ry: 0,
+      s: 0.97,
+    };
+  }
+
+  // Hover peek / receive state: documents peek slightly upward
+  const peekRise = phase === 'peek' ? 0.1 * g.h : 0.05 * g.h;
   const near =
     phase === 'peek' && pointer != null
-      ? Math.max(0, 1 - Math.abs(pointer - x) / (g.w * 0.32))
+      ? Math.max(0, 1 - Math.abs(pointer - (g.w / 2 + offset * 0.03 * g.w)) / (g.w * 0.35))
       : 0;
-  const rise = rest.rise + (phase === 'receive' ? 0.03 : 0.1);
+
   return {
-    x,
-    y: floor - rise * g.h - near * near * g.h * 0.09,
-    z: 0,
-    r: rest.r * 1.6,
+    x: g.w / 2 + offset * 0.03 * g.w,
+    y: floor - peekRise - near * near * g.h * 0.05,
+    z: rank * 1.5 * g.scale,
+    r: offset * 0.9,
     ry: 0,
-    s: 1,
+    s: 0.98,
   };
 };
 
@@ -1728,13 +1741,13 @@ export const Folder: React.FC<FolderProps> = ({
           ? place(hovering.rank, inside, 'open', s)
           : null;
       const focusScale = clamp(
-        ((geometry.tabH + geometry.h) * 1.18) / geometry.docH,
-        1.2,
-        2.2
+        ((geometry.tabH + geometry.h) * 1.05) / geometry.docH,
+        1.15,
+        1.24
       );
       const focusY = geometry.book
         ? geometry.tabH + geometry.h / 2
-        : geometry.tabH + geometry.h * 0.36;
+        : geometry.tabH + geometry.h * 0.24;
 
       state.items.forEach((item: any, index: number) => {
         if (item.fresh) {
@@ -1754,7 +1767,7 @@ export const Folder: React.FC<FolderProps> = ({
           target = {
             x: geometry.w / 2,
             y: focusY,
-            z: 0,
+            z: 50 * sc,
             r: 0,
             ry: 0,
             s: focusScale,
@@ -1803,6 +1816,13 @@ export const Folder: React.FC<FolderProps> = ({
               : (order * 0.03) / s.speed;
           const active = elapsed >= delay ? phase : state.previous;
           target = place(item.rank, inside, active, s);
+          if (state.focus >= 0 && state.focus !== index) {
+            target.s *= 0.84;
+            fade = 0.52;
+            const shiftDir = item.rank < state.focus ? -1 : 1;
+            target.x += shiftDir * 22 * sc;
+            target.y += 10 * sc;
+          }
           if (elapsed < delay) busy = true;
           if (staged && introTime < dropAt(item.rank)) {
             target = introPose(item, target);
@@ -1955,7 +1975,7 @@ export const Folder: React.FC<FolderProps> = ({
       );
       const folder = multiply(desk, move(shift, 0));
       const flipped = isBook && theta < -90;
-      const frontZ = flipped ? '3' : '40';
+      const frontZ = flipped ? '3' : (!isBook && (theta < -25 || state.phase === 'open') ? '8' : '40');
 
       if (backRef.current) {
         backRef.current.style.transform = toCss(folder);

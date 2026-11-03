@@ -61,7 +61,8 @@ const CaseStudiesSection: React.FC = () => {
 
   const isMobile = windowWidth < 640;
   const isTablet = windowWidth >= 640 && windowWidth < 1024;
-  const folderSize = isMobile ? 1.25 : isTablet ? 1.6 : 1.95;
+  const isSmallDesktop = windowWidth >= 1024 && windowWidth < 1280;
+  const folderSize = isMobile ? 1.2 : isTablet ? 1.45 : isSmallDesktop ? 1.7 : 1.9;
 
   return (
     <section
@@ -96,7 +97,7 @@ const CaseStudiesSection: React.FC = () => {
         {/* ======================================================== */}
         {/* INTERACTIVE FOLDER COMPONENT                             */}
         {/* ======================================================== */}
-        <div className="flex justify-center items-center pt-8 sm:pt-14 md:pt-16 pb-4 sm:pb-8 overflow-visible min-h-[460px] sm:min-h-[500px]">
+        <div className="flex justify-center items-center pt-8 sm:pt-14 md:pt-16 pb-6 sm:pb-10 overflow-visible min-h-[480px] sm:min-h-[520px] md:min-h-[540px]">
           <Folder
             label="Commercial Cases"
             items={CASE_STUDIES}
