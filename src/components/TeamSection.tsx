@@ -26,6 +26,7 @@ export interface TeamMember {
   role: string;
   category: "Founding Partner" | "Legal Head" | "Partner" | "Senior Associate";
   image: string | null;
+  imagePosition?: string;
   bio: string;
   linkedin: string;
   email: string;
@@ -40,6 +41,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     role: "Founding Partner",
     category: "Founding Partner",
     image: siddharthImg,
+    imagePosition: "object-[center_15%]",
     bio: "With over 5 years of experience in commercial dispute litigation, Siddharth has successfully recovered more than 1.5 millions for clients across various industries.",
     linkedin: "https://www.linkedin.com/in/siddharth-lokhande-938377213/",
     email: "ceo@lexianandjurian.com",
@@ -52,6 +54,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     role: "Legal Head",
     category: "Legal Head",
     image: sayaliImg,
+    imagePosition: "object-[center_15%]",
     bio: "Sayali specializes in complex commercial disputes and has a track record of 95% success rate in contract breach and partnership dissolution cases.",
     linkedin: "https://www.linkedin.com/in/",
     email: "info@lexianandjurian.com",
@@ -386,7 +389,7 @@ export const TeamSection: React.FC = () => {
                     <img
                       src={prevMember.image}
                       alt={prevMember.name}
-                      className="w-full h-full object-cover object-[center_20%]"
+                      className={`w-full h-full object-cover ${prevMember.imagePosition || "object-[center_20%]"}`}
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-b from-[#001d51] via-[#001a47] to-[#00102e] flex flex-col items-center justify-center text-white p-4">
@@ -430,7 +433,7 @@ export const TeamSection: React.FC = () => {
                       <img
                         src={activeMember.image}
                         alt={activeMember.name}
-                        className="w-full h-full object-cover object-[center_20%] sm:object-top transition-transform duration-500 hover:scale-105"
+                        className={`w-full h-full object-cover ${activeMember.imagePosition || "object-[center_20%]"} transition-transform duration-500 hover:scale-105`}
                       />
                     ) : (
                       /* Placeholder for Future Photo Integration */
@@ -518,7 +521,7 @@ export const TeamSection: React.FC = () => {
                     <img
                       src={nextMember.image}
                       alt={nextMember.name}
-                      className="w-full h-full object-cover object-[center_20%]"
+                      className={`w-full h-full object-cover ${nextMember.imagePosition || "object-[center_20%]"}`}
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-b from-[#001d51] via-[#001a47] to-[#00102e] flex flex-col items-center justify-center text-white p-4">
