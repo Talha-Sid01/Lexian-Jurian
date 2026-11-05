@@ -935,14 +935,14 @@ const CaseStudyCard = ({
       {/* 3. METRICS: 2-Column Balanced Metric Tiles */}
       <div className="folder-case-metrics">
         <div className="folder-case-metric-cell">
-          <span className="folder-case-metric-label">RECOVERED</span>
+          <span className="folder-case-metric-label">{item.metric1Label || 'RECOVERED'}</span>
           <span className="folder-case-metric-value">{item.recovered}</span>
           <span className="folder-case-metric-sub success">{successText}</span>
         </div>
         <div className="folder-case-metric-cell">
-          <span className="folder-case-metric-label">TIMELINE</span>
+          <span className="folder-case-metric-label">{item.metric2Label || 'TIMELINE'}</span>
           <span className="folder-case-metric-value duration">{item.duration}</span>
-          <span className="folder-case-metric-sub meta">Resolution</span>
+          <span className="folder-case-metric-sub meta">{item.timelineSub || 'Resolution'}</span>
         </div>
       </div>
 
@@ -952,14 +952,16 @@ const CaseStudyCard = ({
           <div className="folder-case-btn-group">
             <button
               type="button"
-              className="folder-case-action-btn primary"
+              className={`folder-case-action-btn primary ${item.isPlaceholder ? 'opacity-90 cursor-default' : ''}`}
               onClick={e => {
                 e.stopPropagation();
-                onNavigate?.(item);
+                if (!item.isPlaceholder) {
+                  onNavigate?.(item);
+                }
               }}
             >
-              <span>View Case Study</span>
-              <ArrowRight className="w-3 h-3" />
+              <span>{item.isPlaceholder ? 'Protected Legal Record' : 'View Case Study'}</span>
+              {!item.isPlaceholder && <ArrowRight className="w-3 h-3" />}
             </button>
             <button
               type="button"
@@ -974,7 +976,9 @@ const CaseStudyCard = ({
           </div>
         ) : (
           <div className="folder-case-hint">
-            <span className="folder-case-hint-text">View Details</span>
+            <span className="folder-case-hint-text">
+              {item.isPlaceholder ? 'Confidential Notice' : 'View Details'}
+            </span>
             <ArrowRight className="folder-case-hint-arrow" />
           </div>
         )}
@@ -2538,7 +2542,7 @@ export const Folder: React.FC<FolderProps> = ({
   const handleCardNavigate = (item: FolderItem) => {
     if (onItemClick) {
       onItemClick(item, focusedIndex);
-    } else if (item.id) {
+    } else if (item.id && !item.isPlaceholder) {
       navigate(`/proven-results/${item.id}`);
     }
   };

@@ -4,7 +4,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Check, Star } from "lucide-react";
 import LegalPlanPopup from "./LegalPlanPopup";
-import PriceTagReveal from "./PriceTagReveal";
 
 const PricingSection = () => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
@@ -78,6 +77,7 @@ const PricingSection = () => {
       subtitle: "Fast-track dispute settlement",
       price: "₹75,000",
       priceNote: "one-time fee + 10% success fee",
+      popular: true,
       features: [
         "30-day resolution target",
         "Mediation & arbitration focus",
@@ -122,8 +122,10 @@ const PricingSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 max-w-6xl mx-auto">
           {plans.map((plan, index) => (
-            <Card key={index} className={`glare-effect hover-lift bg-white border shadow-soft scroll-animate relative rounded-xl transition-all duration-200 ${
-              plan.popular ? 'border-[#00BFFF] shadow-md ring-1 ring-[#00BFFF]/20' : 'border-border'
+            <Card key={index} className={`hover-lift scroll-animate relative rounded-xl transition-all duration-300 ${
+              plan.popular 
+                ? 'border-2 border-[#00BFFF] bg-gradient-to-b from-sky-50/70 via-white to-white shadow-lg shadow-[#00BFFF]/15 ring-1 ring-[#00BFFF]/30 hover:border-[#00BFFF] hover:shadow-xl hover:shadow-[#00BFFF]/25 hover:ring-[#00BFFF]/40' 
+                : 'border border-border bg-white shadow-soft hover:border-[#00BFFF]/40 hover:shadow-md'
             }`}>
               {plan.popular && (
                 <div className="absolute -top-3.5 left-1/2 transform -translate-x-1/2">
@@ -138,14 +140,13 @@ const PricingSection = () => {
                 <div className="space-y-1.5">
                   <h3 className="text-lg md:text-xl font-semibold text-primary">{plan.name}</h3>
                   <p className="text-xs sm:text-sm text-muted-foreground">{plan.subtitle}</p>
-                  <div className="py-2">
-                    <PriceTagReveal
-                      price={plan.price}
-                      priceNote={plan.priceNote}
-                      planName={plan.name}
-                      popular={plan.popular}
-                      index={index}
-                    />
+                  <div className="py-3">
+                    <div className="text-3xl md:text-4xl font-bold text-primary tracking-tight font-serif">
+                      {plan.price}
+                    </div>
+                    <div className="text-xs sm:text-sm text-muted-foreground mt-0.5 font-sans">
+                      {plan.priceNote}
+                    </div>
                   </div>
                 </div>
               </CardHeader>
@@ -163,7 +164,7 @@ const PricingSection = () => {
                 <Button 
                   onClick={() => setSelectedPlan(plan.name)}
                   className={`w-full rounded-lg font-medium text-xs sm:text-sm h-10 ${
-                    plan.popular ? 'bg-primary hover:bg-primary-light text-primary-foreground' : 'hover:bg-primary hover:text-white'
+                    plan.popular ? 'bg-[#00BFFF] hover:bg-[#26cbff] text-[#001d51] font-semibold shadow-sm' : 'hover:bg-primary hover:text-white'
                   }`}
                   variant={plan.popular ? 'default' : 'outline'}
                 >

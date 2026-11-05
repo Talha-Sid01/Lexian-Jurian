@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import CommercialDisputeEnquirySection from "@/components/CommercialDisputeEnquirySection";
 import AboutSection from "@/components/AboutSection";
+import GlobalPresenceSection from "@/components/GlobalPresenceSection";
 import CaseStudiesSection from "@/components/CaseStudiesSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
 import ServicesMarquee from "@/components/ServicesMarquee";
@@ -64,6 +65,9 @@ const Index = () => {
         <ProcessJourneySection />
         <div id="about" className="scroll-mt-28">
           <AboutSection />
+        </div>
+        <div id="global-presence" className="scroll-mt-28">
+          <GlobalPresenceSection />
         </div>
         <div id="team" className="scroll-mt-28">
           <TeamSection />
