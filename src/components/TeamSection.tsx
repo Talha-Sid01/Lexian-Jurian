@@ -251,7 +251,7 @@ const ExpertJurySlider = () => {
 };
 
 // =========================================================================
-// 3. MAIN TEAM SECTION WITH SOPHISTICATED EDITORIAL CAROUSEL
+// 3. MAIN TEAM SECTION WITH COMPACT 3-CARD DESKTOP CAROUSEL
 // =========================================================================
 export const TeamSection: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -262,6 +262,9 @@ export const TeamSection: React.FC = () => {
   const activeMember = TEAM_MEMBERS[currentIndex];
   const prevIndex = (currentIndex - 1 + totalMembers) % totalMembers;
   const nextIndex = (currentIndex + 1) % totalMembers;
+
+  const prevMember = TEAM_MEMBERS[prevIndex];
+  const nextMember = TEAM_MEMBERS[nextIndex];
 
   const handlePrev = useCallback(() => {
     setCurrentIndex((prev) => (prev - 1 + totalMembers) % totalMembers);
@@ -314,37 +317,37 @@ export const TeamSection: React.FC = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-[#F8FAFC] text-slate-900 relative select-none overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10 max-w-7xl">
+    <section className="py-14 md:py-20 bg-[#F8FAFC] text-slate-900 relative select-none overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
         {/* ======================================================== */}
         {/* SECTION HEADER                                           */}
         {/* ======================================================== */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-3 sm:space-y-4">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-2.5 sm:space-y-3">
           <Badge className="bg-sky-50 text-[#001d51] border border-[#00BFFF]/30 text-xs sm:text-sm px-4 py-1.5 rounded-full font-semibold inline-flex items-center gap-1.5 shadow-none hover:bg-sky-100 transition-colors">
             <Users className="w-3.5 h-3.5 text-[#00BFFF]" />
             Leadership &amp; Legal Experts
           </Badge>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#001d51] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#001d51] tracking-tight">
             Meet Our Legal Experts
           </h2>
 
-          <p className="text-sm sm:text-base md:text-lg text-slate-600 font-normal leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xs sm:text-sm md:text-base text-slate-600 font-normal leading-relaxed max-w-2xl mx-auto">
             Experienced legal professionals dedicated to resolving your commercial disputes with strategic insight and decisive advocacy.
           </p>
         </div>
 
         {/* ======================================================== */}
-        {/* ROLE NAVIGATION SWITCHER (Integrated Compact Role Bar)   */}
+        {/* ROLE NAVIGATION SWITCHER (Compact 1-Touch Filter Bar)    */}
         {/* ======================================================== */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-10 sm:mb-12 px-2">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-10 px-2">
           {TEAM_MEMBERS.map((member, index) => {
             const isSelected = currentIndex === index;
             return (
               <button
                 key={member.id}
                 onClick={() => handleSelect(index)}
-                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 border flex items-center gap-2 ${
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 border flex items-center gap-1.5 ${
                   isSelected
                     ? "bg-[#001d51] text-white border-[#001d51] shadow-sm shadow-[#001d51]/20 scale-105"
                     : "bg-white text-slate-700 border-slate-200 hover:border-[#00BFFF]/60 hover:text-[#001d51] hover:bg-sky-50/50"
@@ -362,78 +365,83 @@ export const TeamSection: React.FC = () => {
         </div>
 
         {/* ======================================================== */}
-        {/* HORIZONTAL PROFILE CAROUSEL STAGE                        */}
+        {/* BALANCED 3-CARD HORIZONTAL CAROUSEL DECK (Visible on Desktop) */}
         {/* ======================================================== */}
         <div
-          className="relative max-w-6xl mx-auto px-2 sm:px-6"
+          className="relative max-w-5xl mx-auto"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {/* Main 3-Item Carousel Deck */}
-          <div className="relative flex items-center justify-center min-h-[580px] sm:min-h-[620px] md:min-h-[660px]">
-            {/* 1. LEFT NEIGHBOR PREVIEW (Desktop / Tablet) */}
+          <div className="flex items-center justify-center gap-4 lg:gap-6 min-h-[460px] sm:min-h-[490px] md:min-h-[510px]">
+            {/* 1. LEFT NEIGHBOR PREVIEW CARD (Desktop & Tablet) */}
             <div
               onClick={handlePrev}
-              className="hidden lg:block absolute left-0 w-[280px] xl:w-[320px] z-10 transition-all duration-300 cursor-pointer opacity-50 hover:opacity-80 scale-90 -translate-x-6 xl:-translate-x-10"
-              title={`View ${TEAM_MEMBERS[prevIndex].name}`}
+              className="hidden md:block w-[240px] lg:w-[270px] shrink-0 transition-all duration-300 cursor-pointer opacity-60 hover:opacity-90 hover:scale-[0.94] scale-90"
+              title={`Previous: ${prevMember.name}`}
             >
-              <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden p-3.5 pointer-events-none">
-                <div className="aspect-[3/4] w-full rounded-2xl overflow-hidden bg-slate-100 relative">
-                  {TEAM_MEMBERS[prevIndex].image ? (
+              <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden p-3 transition-shadow">
+                <div className="relative h-[220px] lg:h-[240px] w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80">
+                  {prevMember.image ? (
                     <img
-                      src={TEAM_MEMBERS[prevIndex].image}
-                      alt={TEAM_MEMBERS[prevIndex].name}
+                      src={prevMember.image}
+                      alt={prevMember.name}
                       className="w-full h-full object-cover object-[center_20%]"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-b from-[#001d51] to-[#001130] flex flex-col items-center justify-center text-white p-4">
-                      <div className="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-lg">
-                        {TEAM_MEMBERS[prevIndex].initials}
+                    <div className="w-full h-full bg-gradient-to-b from-[#001d51] via-[#001a47] to-[#00102e] flex flex-col items-center justify-center text-white p-4">
+                      <div className="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-lg mb-2">
+                        {prevMember.initials}
                       </div>
+                      <span className="text-[10px] text-slate-300">In Session</span>
                     </div>
                   )}
+
+                  <div className="absolute top-2.5 left-2.5 bg-[#001d51]/90 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">
+                    {prevMember.role}
+                  </div>
                 </div>
-                <div className="p-3 text-center">
-                  <h4 className="text-sm font-bold text-[#001d51] truncate">
-                    {TEAM_MEMBERS[prevIndex].name}
+
+                <div className="pt-2.5 pb-1 text-center">
+                  <h4 className="text-xs lg:text-sm font-bold text-[#001d51] truncate">
+                    {prevMember.name}
                   </h4>
-                  <p className="text-xs text-[#007ba8] font-medium">
-                    {TEAM_MEMBERS[prevIndex].role}
+                  <p className="text-[11px] text-[#007ba8] font-medium truncate mt-0.5">
+                    {prevMember.specialization}
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* 2. ACTIVE CENTER PROFILE CARD (Hero Focus) */}
-            <div className="w-full max-w-md sm:max-w-lg md:max-w-xl z-20">
+            {/* 2. CENTER ACTIVE PROFILE CARD (Optimal Desktop Scale) */}
+            <div className="w-full max-w-[340px] sm:max-w-[370px] md:max-w-[380px] lg:max-w-[400px] shrink-0 z-20">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeMember.id}
-                  initial={{ opacity: 0, scale: 0.96, y: 12 }}
+                  initial={{ opacity: 0, scale: 0.96, y: 10 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.96, y: -12 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="bg-white rounded-3xl border border-slate-200/90 shadow-[0_16px_40px_-12px_rgba(0,29,81,0.09)] overflow-hidden p-4 sm:p-6"
+                  exit={{ opacity: 0, scale: 0.96, y: -10 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className="bg-white rounded-2xl border border-slate-200/90 shadow-[0_12px_32px_-8px_rgba(0,29,81,0.08)] overflow-hidden p-3.5 sm:p-4.5"
                 >
-                  {/* Portrait Container */}
-                  <div className="relative aspect-[4/5] sm:aspect-[3/4] w-full rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/80">
+                  {/* Portrait Container with Optimal Compact Height */}
+                  <div className="relative h-[260px] sm:h-[285px] lg:h-[305px] w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80">
                     {activeMember.image ? (
                       <img
                         src={activeMember.image}
                         alt={activeMember.name}
-                        className="w-full h-full object-cover object-[center_20%] sm:object-top transition-transform duration-700 hover:scale-105"
+                        className="w-full h-full object-cover object-[center_20%] sm:object-top transition-transform duration-500 hover:scale-105"
                       />
                     ) : (
-                      /* Elegant Initials Placeholder for Future Integration */
+                      /* Placeholder for Future Photo Integration */
                       <div className="w-full h-full bg-gradient-to-b from-[#001d51] via-[#001a47] to-[#00102e] flex flex-col items-center justify-center text-white p-6 relative overflow-hidden">
-                        <Scale className="w-48 h-48 text-white/[0.03] absolute -bottom-8 -right-8 pointer-events-none" />
-                        
-                        <div className="w-24 h-24 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-3xl tracking-widest shadow-inner mb-4">
+                        <Scale className="w-40 h-40 text-white/[0.03] absolute -bottom-6 -right-6 pointer-events-none" />
+
+                        <div className="w-20 h-20 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-2xl tracking-widest shadow-inner mb-3">
                           {activeMember.initials}
                         </div>
 
-                        <Badge className="bg-white/10 text-slate-200 border border-white/20 text-xs px-3 py-1 rounded-full inline-flex items-center gap-1.5">
+                        <Badge className="bg-white/10 text-slate-200 border border-white/20 text-xs px-3 py-0.5 rounded-full inline-flex items-center gap-1.5">
                           <Camera className="w-3.5 h-3.5 text-[#00BFFF]" />
                           Official Portrait in Session
                         </Badge>
@@ -441,56 +449,56 @@ export const TeamSection: React.FC = () => {
                     )}
 
                     {/* Role Overlay Tag */}
-                    <div className="absolute top-3.5 left-3.5 bg-[#001d51]/90 backdrop-blur-md border border-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-sm flex items-center gap-1.5">
+                    <div className="absolute top-2.5 left-2.5 bg-[#001d51]/90 backdrop-blur-md border border-white/20 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#00BFFF]" />
                       <span>{activeMember.role}</span>
                     </div>
 
-                    {/* Verified Credentials Tag */}
-                    <div className="absolute bottom-3.5 right-3.5 bg-white/90 backdrop-blur-md border border-slate-200/80 text-[#001d51] text-[11px] font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
+                    {/* Verified Tag */}
+                    <div className="absolute bottom-2.5 right-2.5 bg-white/90 backdrop-blur-md border border-slate-200/80 text-[#001d51] text-[10px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
                       Legal Expert
                     </div>
                   </div>
 
                   {/* Profile Information */}
-                  <div className="pt-5 sm:pt-6 space-y-3 text-center sm:text-left">
+                  <div className="pt-3.5 sm:pt-4 space-y-2 text-center sm:text-left">
                     <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
                       <div>
-                        <h3 className="text-xl sm:text-2xl font-bold text-[#001d51] tracking-tight">
+                        <h3 className="text-lg sm:text-xl font-bold text-[#001d51] tracking-tight">
                           {activeMember.name}
                         </h3>
-                        <p className="text-xs sm:text-sm font-semibold text-[#007ba8] mt-0.5">
+                        <p className="text-xs font-semibold text-[#007ba8] mt-0.5">
                           {activeMember.specialization}
                         </p>
                       </div>
 
-                      {/* Verified Social & Email Action Icons */}
-                      <div className="flex items-center justify-center sm:justify-end gap-2 pt-2 sm:pt-0">
+                      {/* Verified Action Icons */}
+                      <div className="flex items-center justify-center sm:justify-end gap-1.5 pt-1 sm:pt-0">
                         {activeMember.linkedin && (
                           <a
                             href={activeMember.linkedin}
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={`LinkedIn profile for ${activeMember.name}`}
-                            className="w-9 h-9 rounded-full bg-slate-100 hover:bg-[#001d51] text-slate-600 hover:text-white border border-slate-200 flex items-center justify-center transition-all duration-200"
+                            className="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#001d51] text-slate-600 hover:text-white border border-slate-200 flex items-center justify-center transition-all duration-200"
                           >
-                            <Linkedin className="w-4 h-4" />
+                            <Linkedin className="w-3.5 h-3.5" />
                           </a>
                         )}
                         {activeMember.email && (
                           <a
                             href={`mailto:${activeMember.email}`}
                             aria-label={`Send email to ${activeMember.name}`}
-                            className="w-9 h-9 rounded-full bg-slate-100 hover:bg-[#001d51] text-slate-600 hover:text-white border border-slate-200 flex items-center justify-center transition-all duration-200"
+                            className="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#001d51] text-slate-600 hover:text-white border border-slate-200 flex items-center justify-center transition-all duration-200"
                           >
-                            <Mail className="w-4 h-4" />
+                            <Mail className="w-3.5 h-3.5" />
                           </a>
                         )}
                       </div>
                     </div>
 
-                    {/* Profile Description */}
-                    <p className="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed border-t border-slate-100 pt-3">
+                    {/* Compact Bio */}
+                    <p className="text-xs text-slate-600 font-normal leading-relaxed border-t border-slate-100 pt-2.5 line-clamp-3">
                       "{activeMember.bio}"
                     </p>
                   </div>
@@ -498,34 +506,40 @@ export const TeamSection: React.FC = () => {
               </AnimatePresence>
             </div>
 
-            {/* 3. RIGHT NEIGHBOR PREVIEW (Desktop / Tablet) */}
+            {/* 3. RIGHT NEIGHBOR PREVIEW CARD (Desktop & Tablet) */}
             <div
               onClick={handleNext}
-              className="hidden lg:block absolute right-0 w-[280px] xl:w-[320px] z-10 transition-all duration-300 cursor-pointer opacity-50 hover:opacity-80 scale-90 translate-x-6 xl:translate-x-10"
-              title={`View ${TEAM_MEMBERS[nextIndex].name}`}
+              className="hidden md:block w-[240px] lg:w-[270px] shrink-0 transition-all duration-300 cursor-pointer opacity-60 hover:opacity-90 hover:scale-[0.94] scale-90"
+              title={`Next: ${nextMember.name}`}
             >
-              <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden p-3.5 pointer-events-none">
-                <div className="aspect-[3/4] w-full rounded-2xl overflow-hidden bg-slate-100 relative">
-                  {TEAM_MEMBERS[nextIndex].image ? (
+              <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden p-3 transition-shadow">
+                <div className="relative h-[220px] lg:h-[240px] w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80">
+                  {nextMember.image ? (
                     <img
-                      src={TEAM_MEMBERS[nextIndex].image}
-                      alt={TEAM_MEMBERS[nextIndex].name}
+                      src={nextMember.image}
+                      alt={nextMember.name}
                       className="w-full h-full object-cover object-[center_20%]"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-b from-[#001d51] to-[#001130] flex flex-col items-center justify-center text-white p-4">
-                      <div className="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-lg">
-                        {TEAM_MEMBERS[nextIndex].initials}
+                    <div className="w-full h-full bg-gradient-to-b from-[#001d51] via-[#001a47] to-[#00102e] flex flex-col items-center justify-center text-white p-4">
+                      <div className="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-lg mb-2">
+                        {nextMember.initials}
                       </div>
+                      <span className="text-[10px] text-slate-300">In Session</span>
                     </div>
                   )}
+
+                  <div className="absolute top-2.5 left-2.5 bg-[#001d51]/90 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">
+                    {nextMember.role}
+                  </div>
                 </div>
-                <div className="p-3 text-center">
-                  <h4 className="text-sm font-bold text-[#001d51] truncate">
-                    {TEAM_MEMBERS[nextIndex].name}
+
+                <div className="pt-2.5 pb-1 text-center">
+                  <h4 className="text-xs lg:text-sm font-bold text-[#001d51] truncate">
+                    {nextMember.name}
                   </h4>
-                  <p className="text-xs text-[#007ba8] font-medium">
-                    {TEAM_MEMBERS[nextIndex].role}
+                  <p className="text-[11px] text-[#007ba8] font-medium truncate mt-0.5">
+                    {nextMember.specialization}
                   </p>
                 </div>
               </div>
@@ -535,15 +549,15 @@ export const TeamSection: React.FC = () => {
           {/* ======================================================== */}
           {/* CAROUSEL CONTROLS (Arrows, Dots, Counter)                 */}
           {/* ======================================================== */}
-          <div className="flex items-center justify-between max-w-md mx-auto mt-6 pt-2">
+          <div className="flex items-center justify-between max-w-sm sm:max-w-md mx-auto mt-6 pt-1">
             <Button
               onClick={handlePrev}
               variant="outline"
               size="icon"
               aria-label="Previous legal expert"
-              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white border-slate-200 text-[#001d51] hover:bg-[#001d51] hover:text-white transition-all shadow-sm"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border-slate-200 text-[#001d51] hover:bg-[#001d51] hover:text-white transition-all shadow-sm"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             </Button>
 
             {/* Profile Dots & Numeric Counter */}
@@ -554,15 +568,15 @@ export const TeamSection: React.FC = () => {
                     key={dotIdx}
                     onClick={() => handleSelect(dotIdx)}
                     aria-label={`Jump to profile ${dotIdx + 1}`}
-                    className={`h-2 rounded-full transition-all duration-300 ${
+                    className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
                       currentIndex === dotIdx
-                        ? "w-7 bg-[#001d51]"
-                        : "w-2 bg-slate-300 hover:bg-slate-400"
+                        ? "w-6 sm:w-7 bg-[#001d51]"
+                        : "w-1.5 sm:w-2 bg-slate-300 hover:bg-slate-400"
                     }`}
                   />
                 ))}
               </div>
-              <span className="text-xs font-mono font-semibold text-slate-500">
+              <span className="text-[11px] sm:text-xs font-mono font-semibold text-slate-500">
                 0{currentIndex + 1} / 0{totalMembers}
               </span>
             </div>
@@ -572,9 +586,9 @@ export const TeamSection: React.FC = () => {
               variant="outline"
               size="icon"
               aria-label="Next legal expert"
-              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white border-slate-200 text-[#001d51] hover:bg-[#001d51] hover:text-white transition-all shadow-sm"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border-slate-200 text-[#001d51] hover:bg-[#001d51] hover:text-white transition-all shadow-sm"
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </Button>
           </div>
         </div>
@@ -582,7 +596,7 @@ export const TeamSection: React.FC = () => {
         {/* ======================================================== */}
         {/* EXPERT JURY SLIDER (Preserved at Section Base)            */}
         {/* ======================================================== */}
-        <div className="mt-14 sm:mt-18 flex justify-center">
+        <div className="mt-10 sm:mt-12 flex justify-center">
           <ExpertJurySlider />
         </div>
       </div>
