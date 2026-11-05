@@ -56,7 +56,7 @@ export const PriceTagReveal: React.FC<PriceTagRevealProps> = ({
           ease: [0.16, 1, 0.3, 1],
         }}
       >
-        <div className="text-3xl md:text-4xl font-bold text-primary tracking-tight font-serif">
+        <div className="text-3xl md:text-4xl font-bold text-primary tracking-tight font-sans">
           {price}
         </div>
         <div className="text-xs sm:text-sm text-muted-foreground mt-0.5 font-sans">

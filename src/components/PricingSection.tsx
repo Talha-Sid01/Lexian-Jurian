@@ -141,7 +141,7 @@ const PricingSection = () => {
                   <h3 className="text-lg md:text-xl font-semibold text-primary">{plan.name}</h3>
                   <p className="text-xs sm:text-sm text-muted-foreground">{plan.subtitle}</p>
                   <div className="py-3">
-                    <div className="text-3xl md:text-4xl font-bold text-primary tracking-tight font-serif">
+                    <div className="text-3xl md:text-4xl font-bold text-primary tracking-tight font-sans">
                       {plan.price}
                     </div>
                     <div className="text-xs sm:text-sm text-muted-foreground mt-0.5 font-sans">

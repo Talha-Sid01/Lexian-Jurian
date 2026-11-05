@@ -112,7 +112,7 @@ const MilestoneCard: React.FC<MilestoneCardProps> = ({
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="space-y-1"
         >
-          <div className="flex items-center gap-2 font-serif text-3xl lg:text-4xl font-bold text-[#001338]">
+          <div className="flex items-center gap-2 font-sans text-3xl lg:text-4xl font-bold text-[#001338]">
             {isEven ? null : (
               <span className="text-xs uppercase tracking-widest font-sans font-semibold text-[#00BFFF]">
                 {item.tag}
@@ -236,7 +236,7 @@ const MilestoneCard: React.FC<MilestoneCardProps> = ({
 
           {/* Mobile Year & Tag Header (visible only on mobile/small tablet) */}
           <div className="flex md:hidden items-center justify-between gap-2 mb-3">
-            <span className="text-2xl font-serif font-bold text-[#001d51]">
+            <span className="text-2xl font-sans font-bold text-[#001d51]">
               {item.year}
             </span>
             <span className="text-[11px] font-semibold uppercase tracking-wider text-[#007ba8] bg-sky-50 border border-sky-100 px-2.5 py-0.5 rounded-full">

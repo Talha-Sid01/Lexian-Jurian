@@ -156,7 +156,7 @@ const OurStory = () => {
                 {/* Highlighted Founding-Year Callout (2008) */}
                 <div className="flex items-center gap-4 sm:gap-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-sky-50/80 via-white to-sky-50/40 border border-sky-100 shadow-xs">
                   <div className="flex items-baseline gap-1 text-[#001d51]">
-                    <span className="text-3xl sm:text-4xl font-serif font-bold tracking-tight">
+                    <span className="text-3xl sm:text-4xl font-sans font-bold tracking-tight">
                       2008
                     </span>
                   </div>
@@ -304,7 +304,7 @@ const OurStory = () => {
                     className="group relative rounded-2xl bg-gradient-to-b from-white to-slate-50/60 border border-slate-200/90 p-8 sm:p-9 flex flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-sky-950/5 hover:border-[#00BFFF]/60"
                   >
                     {/* Watermark index number */}
-                    <div className="absolute top-6 right-6 font-serif text-3xl font-bold text-slate-200 select-none group-hover:text-[#00BFFF]/30 transition-colors">
+                    <div className="absolute top-6 right-6 font-sans text-3xl font-bold text-slate-200 select-none group-hover:text-[#00BFFF]/30 transition-colors">
                       {val.id}
                     </div>
 

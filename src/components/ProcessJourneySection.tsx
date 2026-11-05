@@ -232,7 +232,7 @@ const ProcessJourneySection: React.FC = () => {
                   {/* Numbered Cyan Circle Indicator */}
                   <div className="relative z-10 flex-shrink-0 flex items-center justify-center">
                     <div
-                      className={`w-[52px] h-[52px] sm:w-[62px] sm:h-[62px] md:w-[70px] md:h-[70px] rounded-full flex items-center justify-center font-serif font-bold text-base sm:text-lg md:text-xl transition-all duration-500 ease-out ${
+                      className={`w-[52px] h-[52px] sm:w-[62px] sm:h-[62px] md:w-[70px] md:h-[70px] rounded-full flex items-center justify-center font-sans font-bold text-base sm:text-lg md:text-xl transition-all duration-500 ease-out ${
                         isStepActive
                           ? "bg-[#00BFFF] text-[#001d51] shadow-md scale-100"
                           : "bg-[#031d4d] text-slate-400 border border-white/20 scale-95"
@@ -337,7 +337,7 @@ const ProcessJourneySection: React.FC = () => {
                 </div>
 
                 {/* Large Cyan Metric Figure */}
-                <div className="font-serif font-bold text-3xl sm:text-4xl md:text-5xl text-[#00BFFF] tracking-tight group-hover:scale-105 transition-transform duration-200">
+                <div className="font-sans font-extrabold text-3xl sm:text-4xl md:text-5xl text-[#00BFFF] tracking-tight group-hover:scale-105 transition-transform duration-200">
                   {metric.value}
                 </div>
 
