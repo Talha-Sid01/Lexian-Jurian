@@ -91,7 +91,7 @@ export const TrustedClientsBadge: React.FC<TrustedClientsBadgeProps> = ({
         {/* Headline */}
         <div className="flex items-center gap-1.5 mt-0.5">
           <p className="text-xs sm:text-[13.5px] font-bold text-[#001d51] tracking-tight leading-tight">
-            Trusted by 5000+ Clients
+            Trusted by 500+ Clients
           </p>
         </div>
 

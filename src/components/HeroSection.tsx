@@ -74,7 +74,7 @@ const HeroSection = () => {
               </a>
             </div>
 
-            {/* Trust Proof Component: Trusted by 5000+ Clients */}
+            {/* Trust Proof Component: Trusted by 500+ Clients */}
             <div className="pt-2 sm:pt-3">
               <TrustedClientsBadge />
             </div>
