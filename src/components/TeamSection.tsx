@@ -328,11 +328,11 @@ export const TeamSection: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-2.5 sm:space-y-3">
           <Badge className="bg-sky-50 text-[#001d51] border border-[#00BFFF]/30 text-xs sm:text-sm px-4 py-1.5 rounded-full font-semibold inline-flex items-center gap-1.5 shadow-none hover:bg-sky-100 transition-colors">
             <Users className="w-3.5 h-3.5 text-[#00BFFF]" />
-            Leadership &amp; Legal Experts
+            Leadership &amp; Funding Experts
           </Badge>
 
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#001d51] tracking-tight">
-            Meet Our Legal Experts
+            Meet Our Funding Experts
           </h2>
 
           <p className="text-xs sm:text-sm md:text-base text-slate-600 font-normal leading-relaxed max-w-2xl mx-auto">
@@ -389,7 +389,7 @@ export const TeamSection: React.FC = () => {
                     <img
                       src={prevMember.image}
                       alt={prevMember.name}
-                      className={`w-full h-full object-cover ${prevMember.imagePosition || "object-[center_20%]"}`}
+                      className={`w-full h-full object-cover grayscale contrast-[1.05] ${prevMember.imagePosition || "object-[center_20%]"}`}
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-b from-[#001d51] via-[#001a47] to-[#00102e] flex flex-col items-center justify-center text-white p-4">
@@ -433,7 +433,7 @@ export const TeamSection: React.FC = () => {
                       <img
                         src={activeMember.image}
                         alt={activeMember.name}
-                        className={`w-full h-full object-cover ${activeMember.imagePosition || "object-[center_20%]"} transition-transform duration-500 hover:scale-105`}
+                        className={`w-full h-full object-cover grayscale contrast-[1.05] ${activeMember.imagePosition || "object-[center_20%]"} transition-transform duration-500 hover:scale-105`}
                       />
                     ) : (
                       /* Placeholder for Future Photo Integration */
@@ -459,7 +459,7 @@ export const TeamSection: React.FC = () => {
 
                     {/* Verified Tag */}
                     <div className="absolute bottom-2.5 right-2.5 bg-white/90 backdrop-blur-md border border-slate-200/80 text-[#001d51] text-[10px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
-                      Legal Expert
+                      Funding Expert
                     </div>
                   </div>
 
@@ -521,7 +521,7 @@ export const TeamSection: React.FC = () => {
                     <img
                       src={nextMember.image}
                       alt={nextMember.name}
-                      className={`w-full h-full object-cover ${nextMember.imagePosition || "object-[center_20%]"}`}
+                      className={`w-full h-full object-cover grayscale contrast-[1.05] ${nextMember.imagePosition || "object-[center_20%]"}`}
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-b from-[#001d51] via-[#001a47] to-[#00102e] flex flex-col items-center justify-center text-white p-4">
@@ -557,7 +557,7 @@ export const TeamSection: React.FC = () => {
               onClick={handlePrev}
               variant="outline"
               size="icon"
-              aria-label="Previous legal expert"
+              aria-label="Previous funding expert"
               className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border-slate-200 text-[#001d51] hover:bg-[#001d51] hover:text-white transition-all shadow-sm"
             >
               <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -588,7 +588,7 @@ export const TeamSection: React.FC = () => {
               onClick={handleNext}
               variant="outline"
               size="icon"
-              aria-label="Next legal expert"
+              aria-label="Next funding expert"
               className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border-slate-200 text-[#001d51] hover:bg-[#001d51] hover:text-white transition-all shadow-sm"
             >
               <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />

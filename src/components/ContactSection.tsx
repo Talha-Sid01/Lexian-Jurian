@@ -150,6 +150,24 @@ const ContactSection = () => {
                             >
                               {detail}
                             </a>
+                          ) : info.title === "Phone" ? (
+                            <a
+                              key={i}
+                              href={`tel:${detail.replace(/\s+/g, '')}`}
+                              className="text-primary-foreground/80 hover:text-primary-foreground text-sm block hover:underline transition-colors"
+                            >
+                              {detail}
+                            </a>
+                          ) : info.title === "Office Location" ? (
+                            <a
+                              key={i}
+                              href="https://www.google.com/maps/place/LEXIAN+AND+JURIAN/@19.223051,72.8576005,17z/data=!4m6!3m5!1s0x8a07993db4599ecb:0x61c03eed9277e1a8!8m2!3d19.22375!4d72.8594029!16s%2Fg%2F11x_glhskn?entry=ttu"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary-foreground/80 hover:text-primary-foreground text-sm block hover:underline transition-colors"
+                            >
+                              {detail}
+                            </a>
                           ) : (
                             <p key={i} className="text-primary-foreground/80 text-sm">
                               {detail}
@@ -165,7 +183,8 @@ const ContactSection = () => {
             
             <Card className="p-6 bg-white/10 border-white/20 backdrop-blur-sm overflow-hidden">
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.7876!2d72.8577!3d19.2183!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDEzJzA2LjAiTiA3MsKwNTEnMjcuOCJF!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin"
+                title="LEXIAN AND JURIAN Location on Google Maps"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.6534954005877!2d72.85682797585094!3d19.22375504707641!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8a07993db4599ecb%3A0x61c03eed9277e1a8!2sLEXIAN%20AND%20JURIAN!5e0!3m2!1sen!2sin!4v1730894500000!5m2!1sen!2sin"
                 width="100%"
                 height="400"
                 style={{ border: 0 }}

@@ -272,13 +272,19 @@ const CaseStudiesSection: React.FC = () => {
       }
       if (folderId === "arbitration") {
         // Behind on the left, tab positioned on left and clearly visible
-        const offsetLeft = isMobile ? -45 : isTablet ? -72 : -88;
-        const offsetUp = isMobile ? -12 : -20;
+        const offsetLeft = isMobile
+          ? -68
+          : isTablet
+            ? -112
+            : isSmallDesktop
+              ? -132
+              : -148;
+        const offsetUp = isMobile ? -18 : isTablet ? -25 : -32;
         return {
           x: offsetLeft,
           y: offsetUp,
           z: 10,
-          rotate: -2.5,
+          rotate: isMobile ? -2.5 : -3.5,
           scale: 0.96,
           opacity: 0.98,
           filter: "drop-shadow(0 14px 22px rgba(0, 29, 81, 0.13))",
@@ -287,13 +293,19 @@ const CaseStudiesSection: React.FC = () => {
       }
       if (folderId === "corporate") {
         // Behind on the right, tab positioned on right and clearly visible
-        const offsetRight = isMobile ? 45 : isTablet ? 72 : 88;
-        const offsetUp = isMobile ? -12 : -20;
+        const offsetRight = isMobile
+          ? 68
+          : isTablet
+            ? 112
+            : isSmallDesktop
+              ? 132
+              : 148;
+        const offsetUp = isMobile ? -18 : isTablet ? -25 : -32;
         return {
           x: offsetRight,
           y: offsetUp,
           z: 10,
-          rotate: 2.5,
+          rotate: isMobile ? 2.5 : 3.5,
           scale: 0.96,
           opacity: 0.98,
           filter: "drop-shadow(0 14px 22px rgba(0, 29, 81, 0.13))",
@@ -418,13 +430,27 @@ const CaseStudiesSection: React.FC = () => {
       className="relative py-8 sm:py-10 md:py-12 bg-gradient-to-b from-[#F9FBFE] via-white to-[#F2F7FD] overflow-hidden select-none"
       onClick={handleBackgroundClick}
     >
-      {/* Ambient background glows for spatial depth */}
+      {/* Ambient background spatial depth - GPU-optimized radial gradients */}
       <div
         className="absolute inset-0 pointer-events-none overflow-hidden"
         aria-hidden="true"
       >
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] sm:w-[960px] h-[460px] rounded-full bg-gradient-to-tr from-[#00BFFF]/10 via-[#001d51]/5 to-transparent blur-3xl opacity-75" />
-        <div className="absolute right-[8%] top-[25%] w-[300px] h-[300px] rounded-full bg-[#00BFFF]/5 blur-2xl" />
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] sm:w-[960px] h-[460px] opacity-75 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(0, 191, 255, 0.08) 0%, rgba(0, 29, 81, 0.03) 45%, transparent 70%)",
+            transform: "translateZ(0)",
+          }}
+        />
+        <div
+          className="absolute right-[8%] top-[25%] w-[300px] h-[300px] pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(circle at center, rgba(0, 191, 255, 0.05) 0%, transparent 70%)",
+            transform: "translateZ(0)",
+          }}
+        />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
@@ -510,26 +536,16 @@ const CaseStudiesSection: React.FC = () => {
         {/* THREE INTERACTIVE ARCHIVE FOLDERS STAGE                  */}
         {/* ======================================================== */}
         <div
-          className={`relative flex justify-center items-center overflow-visible select-none transition-all duration-300 ${
+          className={`relative flex justify-center items-center overflow-visible select-none transition-[min-height,padding] duration-200 ease-out ${
             archiveState === "expanded" && isMobile
               ? "min-h-[440px] py-3 sm:py-4"
               : "min-h-[390px] sm:min-h-[430px] md:min-h-[470px] py-1.5 sm:py-2 md:py-3"
           }`}
         >
-          {FOLDERS.map((folder, idx) => {
+          {FOLDERS.map((folder) => {
             const isOpen =
               archiveState === "folder-open" && activeFolderId === folder.id;
             const motionProps = getFolderMotion(folder.id);
-
-            // Stagger timing for natural physical separation
-            const staggerDelay =
-              archiveState === "expanded"
-                ? folder.id === "arbitration"
-                  ? 0
-                  : folder.id === "commercial"
-                    ? 0.05
-                    : 0.1
-                : 0;
 
             return (
               <motion.div
@@ -541,20 +557,21 @@ const CaseStudiesSection: React.FC = () => {
                   rotate: motionProps.rotate,
                   scale: motionProps.scale,
                   opacity: motionProps.opacity,
-                  filter: motionProps.filter,
                   zIndex: motionProps.zIndex,
                 }}
                 transition={{
                   type: "spring",
-                  stiffness: 240,
-                  damping: 24,
-                  mass: 0.95,
-                  delay: staggerDelay,
+                  stiffness: 380,
+                  damping: 32,
+                  mass: 0.7,
                 }}
                 style={{
                   position: "absolute",
                   transformOrigin: "center center",
                   cursor: "pointer",
+                  willChange: "transform, opacity",
+                  transform: "translateZ(0)",
+                  filter: motionProps.filter,
                 }}
                 onClick={(e) => handleFolderClick(folder.id, e)}
               >
@@ -574,6 +591,7 @@ const CaseStudiesSection: React.FC = () => {
                   draggable={false}
                   closeOnOutsideClick={true}
                   theme="light"
+                  intro={false}
                 />
               </motion.div>
             );

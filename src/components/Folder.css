@@ -11,6 +11,9 @@
   user-select: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  contain: layout style;
 }
 
 .folder-root[data-theme='light'] {
@@ -251,8 +254,8 @@
     rgba(0, 191, 255, 0.48) 50%,
     rgba(0, 150, 235, 0.54) 100%
   );
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
-  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(160%);
   box-sizing: border-box;
   /* 40% enhanced crisp white translucent border along top and side edges */
   border: 1px solid rgba(255, 255, 255, 0.52);
@@ -272,9 +275,11 @@
     /* Refined, diffused elevation shadow */
     0 20px 40px -6px rgba(0, 29, 81, 0.22);
   transition:
-    box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color 0.3s ease,
-    background 0.3s ease;
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
 }
 
 /* Upper edge reflective glass sheen */
