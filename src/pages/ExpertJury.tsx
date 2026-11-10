@@ -74,24 +74,24 @@ const ExpertJury = () => {
               <Card key={index} className="glare-effect hover-lift bg-card border border-border shadow-soft scroll-animate overflow-hidden">
                 <CardContent className="p-0">
                   {/* Header with gradient */}
-                  <div className="bg-gradient-to-r from-primary to-primary-light p-6 text-primary-foreground">
-                    <div className="flex items-center gap-4">
-                      <div className="w-20 h-20 rounded-full bg-primary-foreground/20 flex items-center justify-center text-2xl font-bold text-primary-foreground">
+                  <div className="bg-gradient-to-r from-primary to-primary-light p-4 sm:p-6 text-primary-foreground">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3.5 sm:gap-4">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary-foreground/20 flex items-center justify-center text-xl sm:text-2xl font-bold text-primary-foreground shrink-0">
                         {expert.photo}
                       </div>
-                      <div>
-                        <h3 className="text-xl md:text-2xl font-bold text-primary-foreground">{expert.name}</h3>
-                        <p className="text-primary-foreground/90 text-sm md:text-base">{expert.title}</p>
-                        <div className="flex items-center gap-2 mt-2">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-primary-foreground">{expert.name}</h3>
+                        <p className="text-primary-foreground/90 text-xs sm:text-sm md:text-base mt-0.5">{expert.title}</p>
+                        <div className="flex items-center justify-center sm:justify-start gap-2 mt-2">
                           <Icon className="h-4 w-4 text-[#00BFFF]" />
-                          <span className="text-[#00BFFF] text-sm font-medium">{expert.experience}</span>
+                          <span className="text-[#00BFFF] text-xs sm:text-sm font-medium">{expert.experience}</span>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   {/* Quote section */}
-                  <div className="p-6 space-y-4">
+                  <div className="p-4 sm:p-6 space-y-4">
                     <div className="relative">
                       <span className="text-6xl text-primary/10 absolute -top-2 -left-2">"</span>
                       <p className="text-muted-foreground leading-relaxed pl-6 pt-4 italic">

@@ -223,8 +223,8 @@ const Services = () => {
             </div>
 
             {/* Active Service Showcase Card */}
-            <div className="bg-white rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-12 border border-slate-200/80 shadow-medium animate-fade-in-up">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-8 md:p-12 border border-slate-200/80 shadow-medium animate-fade-in-up">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
                 {/* Left: Content & Features */}
                 <div className="lg:col-span-7 space-y-6">
                   <div>
@@ -260,18 +260,18 @@ const Services = () => {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="pt-4 flex flex-wrap items-center gap-3">
+                  <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                     <Button
                       onClick={() => setSelectedServiceForModal(activeService.id)}
                       variant="outline"
-                      className="border-slate-300 text-[#001d51] hover:border-[#00BFFF] hover:bg-slate-50 text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full"
+                      className="border-slate-300 text-[#001d51] hover:border-[#00BFFF] hover:bg-slate-50 text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full justify-center"
                     >
                       <span>Explore In Detail</span>
                       <ChevronRight className="ml-1 w-4 h-4" />
                     </Button>
 
-                    <Link to="/#enquiry">
-                      <Button className="bg-[#00BFFF] text-[#001d51] hover:bg-[#26cbff] text-xs sm:text-sm font-semibold px-6 py-2.5 rounded-full shadow-xs">
+                    <Link to="/#enquiry" className="w-full sm:w-auto">
+                      <Button className="w-full bg-[#00BFFF] text-[#001d51] hover:bg-[#26cbff] text-xs sm:text-sm font-semibold px-6 py-2.5 rounded-full shadow-xs justify-center">
                         <span>Enquire About This Service</span>
                         <ArrowRight className="ml-1.5 w-4 h-4" />
                       </Button>

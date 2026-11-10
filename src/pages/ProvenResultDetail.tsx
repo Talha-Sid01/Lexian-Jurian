@@ -182,7 +182,7 @@ const ProvenResultDetail = () => {
     return (
       <div className="min-h-screen bg-secondary">
         <Header />
-        <div className="container mx-auto px-6 py-24">
+        <div className="container mx-auto px-4 sm:px-6 py-24">
           <div className="text-center py-20">
             <p className="text-muted-foreground">Loading...</p>
           </div>
@@ -196,7 +196,7 @@ const ProvenResultDetail = () => {
     return (
       <div className="min-h-screen bg-secondary">
         <Header />
-        <div className="container mx-auto px-6 py-24">
+        <div className="container mx-auto px-4 sm:px-6 py-24">
           <div className="text-center py-20">
             <h2 className="text-2xl font-bold text-primary mb-4">Result Not Found</h2>
             <Button onClick={() => navigate('/proven-results')}>
@@ -225,7 +225,7 @@ const ProvenResultDetail = () => {
   return (
     <div className="min-h-screen bg-secondary">
       <Header />
-      <div className="container mx-auto px-6 pt-10 sm:pt-12 pb-16">
+      <div className="container mx-auto px-4 sm:px-6 pt-10 sm:pt-12 pb-16">
         <Button 
           variant="ghost" 
           onClick={() => navigate('/proven-results')}

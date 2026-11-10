@@ -176,8 +176,8 @@ export const FloatingContactWidget: React.FC = () => {
       ref={widgetRef}
       className="fixed z-50 pointer-events-auto"
       style={{
-        right: "calc(1.5rem + env(safe-area-inset-right, 0px))",
-        bottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))",
+        right: "calc(1rem + env(safe-area-inset-right, 0px))",
+        bottom: "calc(1rem + env(safe-area-inset-bottom, 0px))",
       }}
     >
       {/* POPUP MENU */}
@@ -186,7 +186,7 @@ export const FloatingContactWidget: React.FC = () => {
         role="dialog"
         aria-modal="false"
         aria-label="Connect With Lexian & Jurian"
-        className={`absolute right-0 bottom-[calc(100%+0.75rem)] w-[calc(100vw-3rem)] sm:w-[350px] max-w-[360px] 
+        className={`absolute right-0 bottom-[calc(100%+0.75rem)] w-[calc(100vw-2rem)] sm:w-[350px] max-w-[360px] 
           bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200/90 shadow-2xl shadow-navy-950/20 
           transition-all duration-200 ease-out origin-bottom-right
           ${
@@ -198,14 +198,14 @@ export const FloatingContactWidget: React.FC = () => {
         {/* Sky-Blue accent top border bar */}
         <div className="h-1 w-full bg-gradient-to-r from-[#001d51] via-[#00BFFF] to-[#001d51] rounded-t-2xl" />
 
-        <div className="p-4 sm:p-5">
+        <div className="p-3.5 sm:p-5">
           {/* Header */}
-          <div className="flex items-start justify-between pb-3 mb-3 border-b border-slate-100">
+          <div className="flex items-start justify-between pb-2.5 sm:pb-3 mb-2.5 sm:mb-3 border-b border-slate-100">
             <div>
-              <h3 className="text-[15px] font-bold text-[#001d51] font-serif leading-snug tracking-tight">
+              <h3 className="text-sm sm:text-[15px] font-bold text-[#001d51] font-serif leading-snug tracking-tight">
                 Connect With Lexian & Jurian
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5">
                 Choose your preferred way to reach us.
               </p>
             </div>
@@ -219,7 +219,7 @@ export const FloatingContactWidget: React.FC = () => {
           </div>
 
           {/* 6 Contact Options Grid */}
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
             {channels.map((channel) => {
               const Content = (
                 <>
@@ -253,7 +253,7 @@ export const FloatingContactWidget: React.FC = () => {
                   onClick={(e) => handleChannelClick(channel, e)}
                   target={channel.isExternal && channel.isConfigured ? "_blank" : undefined}
                   rel={channel.isExternal && channel.isConfigured ? "noopener noreferrer" : undefined}
-                  className="group relative flex items-center gap-2.5 p-2 rounded-xl border border-slate-100 bg-slate-50/60 hover:bg-white hover:border-[#00BFFF]/40 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00BFFF] text-left cursor-pointer"
+                  className="group relative flex items-center gap-2 sm:gap-2.5 p-1.5 sm:p-2 rounded-xl border border-slate-100 bg-slate-50/60 hover:bg-white hover:border-[#00BFFF]/40 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00BFFF] text-left cursor-pointer"
                   title={
                     channel.isConfigured
                       ? `${channel.title} — ${channel.subtitle}`

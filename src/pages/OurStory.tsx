@@ -80,7 +80,7 @@ const OurStory = () => {
             aria-hidden="true"
           />
 
-          <div className="container mx-auto px-6 relative z-10 max-w-5xl">
+          <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-5xl">
             {/* Back to Home Button */}
             <motion.div
               initial={reducedMotion ? { opacity: 1 } : { opacity: 0, x: -12 }}
@@ -134,7 +134,7 @@ const OurStory = () => {
         {/* PHASE 2: THE BEGINNING: COMPANY STORYTELLING                 */}
         {/* ============================================================ */}
         <section className="py-20 md:py-28 bg-white border-b border-slate-100">
-          <div className="container mx-auto px-6 max-w-6xl">
+          <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-14 items-start">
               {/* Left Column: Heading, Founded Year Callout, History Paragraphs */}
               <motion.div
@@ -237,7 +237,7 @@ const OurStory = () => {
             aria-hidden="true"
           />
 
-          <div className="container mx-auto px-6 max-w-6xl relative z-10">
+          <div className="container mx-auto px-4 sm:px-6 max-w-6xl relative z-10">
             {/* Section Header */}
             <motion.div
               initial={reducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
@@ -266,7 +266,7 @@ const OurStory = () => {
         {/* PHASE 4: OUR VALUES: PREMIUM INTERACTIVE CARDS               */}
         {/* ============================================================ */}
         <section className="py-20 md:py-28 bg-white border-b border-slate-100">
-          <div className="container mx-auto px-6 max-w-6xl">
+          <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
             {/* Section Header */}
             <motion.div
               initial={reducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
@@ -345,7 +345,7 @@ const OurStory = () => {
         {/* PHASE 5: JOIN US ON OUR JOURNEY: FINAL CTA                   */}
         {/* ============================================================ */}
         <section className="py-20 md:py-28 bg-white">
-          <div className="container mx-auto px-6 max-w-5xl">
+          <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
             <motion.div
               initial={reducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}

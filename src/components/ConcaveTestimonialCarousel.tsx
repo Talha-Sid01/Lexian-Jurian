@@ -100,12 +100,12 @@ export const ConcaveTestimonialCarousel: React.FC<ConcaveTestimonialCarouselProp
   const isTablet = windowWidth >= 640 && windowWidth < 1024;
 
   const cardWidth = isMobile
-    ? Math.min(windowWidth * 0.84, 300)
+    ? Math.min(windowWidth - 36, 305)
     : isTablet
     ? 350
     : 400;
 
-  const cardHeight = isMobile ? 330 : isTablet ? 365 : 385;
+  const cardHeight = isMobile ? (windowWidth < 360 ? 345 : 330) : isTablet ? 365 : 385;
 
   // Stride (pixel displacement needed to change 1 full card during drag)
   const dragStride = isMobile ? 180 : 280;
@@ -329,7 +329,7 @@ export const ConcaveTestimonialCarousel: React.FC<ConcaveTestimonialCarouselProp
                 aria-hidden={!isCenter}
               >
                 <div
-                  className={`relative flex flex-col justify-between w-full h-full rounded-2xl p-5 sm:p-7 md:p-8 bg-white border transition-all duration-300 ${
+                  className={`relative flex flex-col justify-between w-full h-full rounded-2xl p-4 sm:p-6 md:p-8 bg-white border transition-all duration-300 ${
                     isCenter
                       ? "border-[#00BFFF]/50 shadow-[0_24px_55px_-12px_rgba(0,191,255,0.22),0_12px_28px_-6px_rgba(15,23,42,0.1)] ring-1 ring-[#00BFFF]/25"
                       : "border-slate-200/80 shadow-[0_12px_32px_-8px_rgba(15,23,42,0.08)] group-hover:border-[#00BFFF]/30 group-hover:shadow-[0_16px_36px_-6px_rgba(0,191,255,0.12)]"

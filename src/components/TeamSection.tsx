@@ -1,21 +1,16 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Linkedin,
   Mail,
   Users,
   ChevronRight,
-  ChevronLeft,
   ArrowRight,
-  Scale,
-  Camera,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "motion/react";
 
-import siddharthImg from "@/assets/Siddharth.jpeg";
-import sayaliImg from "@/assets/Sayali.jpeg";
+import siddharthImg from "@/assets/Siddharth.webp";
+import sayaliImg from "@/assets/Sayali.webp";
 
 // =========================================================================
 // 1. CENTRALIZED TEAM MEMBER DATA STRUCTURE
@@ -24,8 +19,8 @@ export interface TeamMember {
   id: string;
   name: string;
   role: string;
-  category: "Founding Partner" | "Legal Head" | "Partner" | "Senior Associate";
-  image: string | null;
+  category: "Founding Partner" | "Legal Head";
+  image: string;
   imagePosition?: string;
   bio: string;
   linkedin: string;
@@ -61,30 +56,6 @@ export const TEAM_MEMBERS: TeamMember[] = [
     initials: "SK",
     specialization: "Complex Commercial Disputes & Contract Breach",
   },
-  {
-    id: "partner",
-    name: "Adv. Rajesh Kumar",
-    role: "Partner",
-    category: "Partner",
-    image: null, // Ready for future photograph upload
-    bio: "Rajesh brings 15 years of expertise in investor disputes and intellectual property cases, with a focus on technology and startup sectors.",
-    linkedin: "https://www.linkedin.com/in/rajeshrkumar/",
-    email: "info@lexianandjurian.com",
-    initials: "RK",
-    specialization: "Investor Disputes & Intellectual Property Claims",
-  },
-  {
-    id: "senior-associate",
-    name: "Adv. Abhay Raj",
-    role: "Senior Associate",
-    category: "Senior Associate",
-    image: null, // Ready for future photograph upload
-    bio: "Abhay specializes in commercial disputes and brings 5 years of expertise in contract breach and partnership dissolution cases.",
-    linkedin: "https://www.linkedin.com/",
-    email: "info@lexianandjurian.com",
-    initials: "AR",
-    specialization: "Commercial Disputes & Dissolution Settlements",
-  },
 ];
 
 // =========================================================================
@@ -96,6 +67,18 @@ const ExpertJurySlider = () => {
   const [sliderProgress, setSliderProgress] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [hasTriggered, setHasTriggered] = useState(false);
+  const [trackWidth, setTrackWidth] = useState(360);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (sliderRef.current) {
+        setTrackWidth(sliderRef.current.offsetWidth);
+      }
+    };
+    updateWidth();
+    window.addEventListener("resize", updateWidth, { passive: true });
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
 
   const calculateProgress = useCallback((clientX: number) => {
     if (!sliderRef.current) return 0;
@@ -182,12 +165,11 @@ const ExpertJurySlider = () => {
   }, [isDragging, handleMove, handleEnd]);
 
   const thumbWidth = typeof window !== 'undefined' && window.innerWidth >= 640 ? 48 : 44;
-  const trackWidth = sliderRef.current ? sliderRef.current.offsetWidth : 360;
   const maxTravel = Math.max(0, trackWidth - thumbWidth - 8);
   const thumbPosition = sliderProgress * maxTravel;
 
   return (
-    <div className="w-full max-w-xl mx-auto rounded-3xl bg-gradient-to-b from-[#001d51] via-[#001744] to-[#001235] border border-white/10 shadow-[0_16px_45px_-12px_rgba(0,29,81,0.45)] px-6 sm:px-8 py-6 sm:py-7 text-white transition-all duration-300 hover:shadow-[0_22px_55px_-10px_rgba(0,29,81,0.55)] relative overflow-hidden group select-none">
+    <div className="w-full max-w-xl mx-auto rounded-3xl bg-gradient-to-b from-[#001d51] via-[#001744] to-[#001235] border border-white/10 shadow-[0_16px_45px_-12px_rgba(0,29,81,0.45)] px-4 sm:px-8 py-5 sm:py-7 text-white transition-all duration-300 hover:shadow-[0_22px_55px_-10px_rgba(0,29,81,0.55)] relative overflow-hidden group select-none">
       {/* Subtle top edge catchlight */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
 
@@ -214,7 +196,7 @@ const ExpertJurySlider = () => {
             aria-valuemax={100}
             aria-valuenow={Math.round(sliderProgress * 100)}
             onKeyDown={handleKeyDown}
-            className="relative h-13 sm:h-14 bg-white/[0.07] border border-white/15 rounded-full overflow-hidden cursor-pointer select-none backdrop-blur-sm shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00BFFF]"
+            className="relative h-13 sm:h-14 bg-white/[0.07] border border-white/15 rounded-full overflow-hidden cursor-pointer select-none backdrop-blur-sm shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00BFFF] touch-none"
             onMouseDown={(e) => { e.preventDefault(); handleStart(e.clientX); }}
             onTouchStart={(e) => { handleStart(e.touches[0].clientX); }}
           >
@@ -254,73 +236,18 @@ const ExpertJurySlider = () => {
 };
 
 // =========================================================================
-// 3. MAIN TEAM SECTION WITH COMPACT 3-CARD DESKTOP CAROUSEL
+// 3. MAIN TEAM SECTION WITH BALANCED 2-EXPERT SHOWCASE
 // =========================================================================
 export const TeamSection: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-  const [touchEndX, setTouchEndX] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  const totalMembers = TEAM_MEMBERS.length;
-  const activeMember = TEAM_MEMBERS[currentIndex];
-  const prevIndex = (currentIndex - 1 + totalMembers) % totalMembers;
-  const nextIndex = (currentIndex + 1) % totalMembers;
-
-  const prevMember = TEAM_MEMBERS[prevIndex];
-  const nextMember = TEAM_MEMBERS[nextIndex];
-
-  const handlePrev = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + totalMembers) % totalMembers);
-  }, [totalMembers]);
-
-  const handleNext = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % totalMembers);
-  }, [totalMembers]);
-
-  const handleSelect = useCallback((index: number) => {
-    setCurrentIndex(index);
-  }, []);
-
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") {
-        handlePrev();
-      } else if (e.key === "ArrowRight") {
-        handleNext();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handlePrev, handleNext]);
-
-  // Touch handlers for mobile swipe
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.targetTouches[0].clientX);
-    setTouchEndX(null);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEndX(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStartX || !touchEndX) return;
-    const distance = touchStartX - touchEndX;
-    const isLeftSwipe = distance > 45;
-    const isRightSwipe = distance < -45;
-
-    if (isLeftSwipe) {
-      handleNext();
-    } else if (isRightSwipe) {
-      handlePrev();
-    }
-    setTouchStartX(null);
-    setTouchEndX(null);
-  };
+  const filteredMembers =
+    selectedCategory === "all"
+      ? TEAM_MEMBERS
+      : TEAM_MEMBERS.filter((m) => m.category === selectedCategory);
 
   return (
-    <section className="py-14 md:py-20 bg-[#F8FAFC] text-slate-900 relative select-none overflow-hidden">
+    <section id="team" className="py-14 md:py-20 bg-[#F8FAFC] text-slate-900 relative select-none overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
         {/* ======================================================== */}
         {/* SECTION HEADER                                           */}
@@ -332,7 +259,7 @@ export const TeamSection: React.FC = () => {
           </Badge>
 
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#001d51] tracking-tight">
-            Meet Our Funding Experts
+            Meet Our Experts
           </h2>
 
           <p className="text-xs sm:text-sm md:text-base text-slate-600 font-normal leading-relaxed max-w-2xl mx-auto">
@@ -341,16 +268,31 @@ export const TeamSection: React.FC = () => {
         </div>
 
         {/* ======================================================== */}
-        {/* ROLE NAVIGATION SWITCHER (Compact 1-Touch Filter Bar)    */}
+        {/* ROLE NAVIGATION SWITCHER                                 */}
         {/* ======================================================== */}
-        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-10 px-2">
-          {TEAM_MEMBERS.map((member, index) => {
-            const isSelected = currentIndex === index;
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-8 sm:mb-10 px-2">
+          <button
+            onClick={() => setSelectedCategory("all")}
+            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 border flex items-center gap-1.5 ${
+              selectedCategory === "all"
+                ? "bg-[#001d51] text-white border-[#001d51] shadow-sm shadow-[#001d51]/20 scale-105"
+                : "bg-white text-slate-700 border-slate-200 hover:border-[#00BFFF]/60 hover:text-[#001d51] hover:bg-sky-50/50"
+            }`}
+          >
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${
+                selectedCategory === "all" ? "bg-[#00BFFF]" : "bg-slate-300"
+              }`}
+            />
+            <span>All Experts</span>
+          </button>
+          {TEAM_MEMBERS.map((member) => {
+            const isSelected = selectedCategory === member.category;
             return (
               <button
                 key={member.id}
-                onClick={() => handleSelect(index)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 border flex items-center gap-1.5 ${
+                onClick={() => setSelectedCategory(member.category)}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 border flex items-center gap-1.5 ${
                   isSelected
                     ? "bg-[#001d51] text-white border-[#001d51] shadow-sm shadow-[#001d51]/20 scale-105"
                     : "bg-white text-slate-700 border-slate-200 hover:border-[#00BFFF]/60 hover:text-[#001d51] hover:bg-sky-50/50"
@@ -368,232 +310,82 @@ export const TeamSection: React.FC = () => {
         </div>
 
         {/* ======================================================== */}
-        {/* BALANCED 3-CARD HORIZONTAL CAROUSEL DECK (Visible on Desktop) */}
+        {/* BALANCED 2-EXPERT SHOWCASE (Side-by-side on desktop)      */}
         {/* ======================================================== */}
-        <div
-          className="relative max-w-5xl mx-auto"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div className="flex items-center justify-center gap-4 lg:gap-6 min-h-[460px] sm:min-h-[490px] md:min-h-[510px]">
-            {/* 1. LEFT NEIGHBOR PREVIEW CARD (Desktop & Tablet) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
+          {filteredMembers.map((member) => (
             <div
-              onClick={handlePrev}
-              className="hidden md:block w-[240px] lg:w-[270px] shrink-0 transition-all duration-300 cursor-pointer opacity-60 hover:opacity-90 hover:scale-[0.94] scale-90"
-              title={`Previous: ${prevMember.name}`}
+              key={member.id}
+              className="w-full max-w-[390px] mx-auto bg-white rounded-2xl border border-slate-200/90 shadow-[0_12px_32px_-8px_rgba(0,29,81,0.08)] hover:shadow-[0_16px_36px_-6px_rgba(0,29,81,0.14)] transition-all duration-300 overflow-hidden p-3.5 sm:p-4.5 flex flex-col justify-between group"
             >
-              <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden p-3 transition-shadow">
-                <div className="relative h-[220px] lg:h-[240px] w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80">
-                  {prevMember.image ? (
-                    <img
-                      src={prevMember.image}
-                      alt={prevMember.name}
-                      className={`w-full h-full object-cover grayscale contrast-[1.05] ${prevMember.imagePosition || "object-[center_20%]"}`}
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-b from-[#001d51] via-[#001a47] to-[#00102e] flex flex-col items-center justify-center text-white p-4">
-                      <div className="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-lg mb-2">
-                        {prevMember.initials}
-                      </div>
-                      <span className="text-[10px] text-slate-300">In Session</span>
-                    </div>
-                  )}
-
-                  <div className="absolute top-2.5 left-2.5 bg-[#001d51]/90 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">
-                    {prevMember.role}
-                  </div>
-                </div>
-
-                <div className="pt-2.5 pb-1 text-center">
-                  <h4 className="text-xs lg:text-sm font-bold text-[#001d51] truncate">
-                    {prevMember.name}
-                  </h4>
-                  <p className="text-[11px] text-[#007ba8] font-medium truncate mt-0.5">
-                    {prevMember.specialization}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* 2. CENTER ACTIVE PROFILE CARD (Optimal Desktop Scale) */}
-            <div className="w-full max-w-[340px] sm:max-w-[370px] md:max-w-[380px] lg:max-w-[400px] shrink-0 z-20">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeMember.id}
-                  initial={{ opacity: 0, scale: 0.96, y: 10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.96, y: -10 }}
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="bg-white rounded-2xl border border-slate-200/90 shadow-[0_12px_32px_-8px_rgba(0,29,81,0.08)] overflow-hidden p-3.5 sm:p-4.5"
-                >
-                  {/* Portrait Container with Optimal Compact Height */}
-                  <div className="relative h-[260px] sm:h-[285px] lg:h-[305px] w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80">
-                    {activeMember.image ? (
-                      <img
-                        src={activeMember.image}
-                        alt={activeMember.name}
-                        className={`w-full h-full object-cover grayscale contrast-[1.05] ${activeMember.imagePosition || "object-[center_20%]"} transition-transform duration-500 hover:scale-105`}
-                      />
-                    ) : (
-                      /* Placeholder for Future Photo Integration */
-                      <div className="w-full h-full bg-gradient-to-b from-[#001d51] via-[#001a47] to-[#00102e] flex flex-col items-center justify-center text-white p-6 relative overflow-hidden">
-                        <Scale className="w-40 h-40 text-white/[0.03] absolute -bottom-6 -right-6 pointer-events-none" />
-
-                        <div className="w-20 h-20 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-2xl tracking-widest shadow-inner mb-3">
-                          {activeMember.initials}
-                        </div>
-
-                        <Badge className="bg-white/10 text-slate-200 border border-white/20 text-xs px-3 py-0.5 rounded-full inline-flex items-center gap-1.5">
-                          <Camera className="w-3.5 h-3.5 text-[#00BFFF]" />
-                          Official Portrait in Session
-                        </Badge>
-                      </div>
-                    )}
-
-                    {/* Role Overlay Tag */}
-                    <div className="absolute top-2.5 left-2.5 bg-[#001d51]/90 backdrop-blur-md border border-white/20 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#00BFFF]" />
-                      <span>{activeMember.role}</span>
-                    </div>
-
-                    {/* Verified Tag */}
-                    <div className="absolute bottom-2.5 right-2.5 bg-white/90 backdrop-blur-md border border-slate-200/80 text-[#001d51] text-[10px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
-                      Funding Expert
-                    </div>
-                  </div>
-
-                  {/* Profile Information */}
-                  <div className="pt-3.5 sm:pt-4 space-y-2 text-center sm:text-left">
-                    <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
-                      <div>
-                        <h3 className="text-lg sm:text-xl font-bold text-[#001d51] tracking-tight">
-                          {activeMember.name}
-                        </h3>
-                        <p className="text-xs font-semibold text-[#007ba8] mt-0.5">
-                          {activeMember.specialization}
-                        </p>
-                      </div>
-
-                      {/* Verified Action Icons */}
-                      <div className="flex items-center justify-center sm:justify-end gap-1.5 pt-1 sm:pt-0">
-                        {activeMember.linkedin && (
-                          <a
-                            href={activeMember.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`LinkedIn profile for ${activeMember.name}`}
-                            className="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#001d51] text-slate-600 hover:text-white border border-slate-200 flex items-center justify-center transition-all duration-200"
-                          >
-                            <Linkedin className="w-3.5 h-3.5" />
-                          </a>
-                        )}
-                        {activeMember.email && (
-                          <a
-                            href={`mailto:${activeMember.email}`}
-                            aria-label={`Send email to ${activeMember.name}`}
-                            className="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#001d51] text-slate-600 hover:text-white border border-slate-200 flex items-center justify-center transition-all duration-200"
-                          >
-                            <Mail className="w-3.5 h-3.5" />
-                          </a>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Compact Bio */}
-                    <p className="text-xs text-slate-600 font-normal leading-relaxed border-t border-slate-100 pt-2.5 line-clamp-3">
-                      "{activeMember.bio}"
-                    </p>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* 3. RIGHT NEIGHBOR PREVIEW CARD (Desktop & Tablet) */}
-            <div
-              onClick={handleNext}
-              className="hidden md:block w-[240px] lg:w-[270px] shrink-0 transition-all duration-300 cursor-pointer opacity-60 hover:opacity-90 hover:scale-[0.94] scale-90"
-              title={`Next: ${nextMember.name}`}
-            >
-              <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden p-3 transition-shadow">
-                <div className="relative h-[220px] lg:h-[240px] w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80">
-                  {nextMember.image ? (
-                    <img
-                      src={nextMember.image}
-                      alt={nextMember.name}
-                      className={`w-full h-full object-cover grayscale contrast-[1.05] ${nextMember.imagePosition || "object-[center_20%]"}`}
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-b from-[#001d51] via-[#001a47] to-[#00102e] flex flex-col items-center justify-center text-white p-4">
-                      <div className="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-lg mb-2">
-                        {nextMember.initials}
-                      </div>
-                      <span className="text-[10px] text-slate-300">In Session</span>
-                    </div>
-                  )}
-
-                  <div className="absolute top-2.5 left-2.5 bg-[#001d51]/90 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">
-                    {nextMember.role}
-                  </div>
-                </div>
-
-                <div className="pt-2.5 pb-1 text-center">
-                  <h4 className="text-xs lg:text-sm font-bold text-[#001d51] truncate">
-                    {nextMember.name}
-                  </h4>
-                  <p className="text-[11px] text-[#007ba8] font-medium truncate mt-0.5">
-                    {nextMember.specialization}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ======================================================== */}
-          {/* CAROUSEL CONTROLS (Arrows, Dots, Counter)                 */}
-          {/* ======================================================== */}
-          <div className="flex items-center justify-between max-w-sm sm:max-w-md mx-auto mt-6 pt-1">
-            <Button
-              onClick={handlePrev}
-              variant="outline"
-              size="icon"
-              aria-label="Previous funding expert"
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border-slate-200 text-[#001d51] hover:bg-[#001d51] hover:text-white transition-all shadow-sm"
-            >
-              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-            </Button>
-
-            {/* Profile Dots & Numeric Counter */}
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1.5">
-                {TEAM_MEMBERS.map((_, dotIdx) => (
-                  <button
-                    key={dotIdx}
-                    onClick={() => handleSelect(dotIdx)}
-                    aria-label={`Jump to profile ${dotIdx + 1}`}
-                    className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
-                      currentIndex === dotIdx
-                        ? "w-6 sm:w-7 bg-[#001d51]"
-                        : "w-1.5 sm:w-2 bg-slate-300 hover:bg-slate-400"
-                    }`}
+              <div>
+                {/* Portrait Container */}
+                <div className="relative h-[270px] sm:h-[300px] lg:h-[320px] w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className={`w-full h-full object-cover grayscale contrast-[1.05] ${
+                      member.imagePosition || "object-[center_15%]"
+                    } transition-transform duration-500 group-hover:scale-105`}
                   />
-                ))}
-              </div>
-              <span className="text-[11px] sm:text-xs font-mono font-semibold text-slate-500">
-                0{currentIndex + 1} / 0{totalMembers}
-              </span>
-            </div>
 
-            <Button
-              onClick={handleNext}
-              variant="outline"
-              size="icon"
-              aria-label="Next funding expert"
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border-slate-200 text-[#001d51] hover:bg-[#001d51] hover:text-white transition-all shadow-sm"
-            >
-              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
-            </Button>
-          </div>
+                  {/* Role Overlay Tag */}
+                  <div className="absolute top-2.5 left-2.5 bg-[#001d51]/90 backdrop-blur-md border border-white/20 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#00BFFF]" />
+                    <span>{member.role}</span>
+                  </div>
+
+                  {/* Verified Tag */}
+                  <div className="absolute bottom-2.5 right-2.5 bg-white/90 backdrop-blur-md border border-slate-200/80 text-[#001d51] text-[10px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
+                    Funding Expert
+                  </div>
+                </div>
+
+                {/* Profile Information */}
+                <div className="pt-3.5 sm:pt-4 space-y-2 text-center sm:text-left">
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
+                    <div>
+                      <h3 className="text-lg sm:text-xl font-bold text-[#001d51] tracking-tight">
+                        {member.name}
+                      </h3>
+                      <p className="text-xs font-semibold text-[#007ba8] mt-0.5">
+                        {member.specialization}
+                      </p>
+                    </div>
+
+                    {/* Social & Contact Actions */}
+                    <div className="flex items-center justify-center sm:justify-end gap-1.5 pt-1 sm:pt-0 shrink-0">
+                      {member.linkedin && (
+                        <a
+                          href={member.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`LinkedIn profile for ${member.name}`}
+                          className="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#001d51] text-slate-600 hover:text-white border border-slate-200 flex items-center justify-center transition-all duration-200"
+                        >
+                          <Linkedin className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                      {member.email && (
+                        <a
+                          href={`mailto:${member.email}`}
+                          aria-label={`Send email to ${member.name}`}
+                          className="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#001d51] text-slate-600 hover:text-white border border-slate-200 flex items-center justify-center transition-all duration-200"
+                        >
+                          <Mail className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Bio */}
+                  <p className="text-xs text-slate-600 font-normal leading-relaxed border-t border-slate-100 pt-2.5 line-clamp-3">
+                    "{member.bio}"
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* ======================================================== */}

@@ -84,7 +84,7 @@ const WhyChooseUsSection = () => {
                 key={feature.id}
                 className="glare-effect hover-lift bg-white border border-border shadow-soft rounded-xl transition-all duration-200 hover:border-[#00BFFF]/40 hover:shadow-md"
               >
-                <CardContent className="p-6 md:p-7">
+                <CardContent className="p-5 sm:p-6 md:p-7">
                   <div className="flex flex-col sm:flex-row items-start gap-4 md:gap-5">
                     <div className="p-3 bg-primary/10 rounded-xl flex-shrink-0">
                       <Icon className="h-6 w-6 md:h-7 md:w-7 text-primary" />

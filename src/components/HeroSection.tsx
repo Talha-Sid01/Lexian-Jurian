@@ -37,16 +37,16 @@ const HeroSection = () => {
             </p>
 
             {/* Benefit Badges */}
-            <div className="flex flex-wrap items-center gap-2 pt-1 text-xs sm:text-sm font-medium text-slate-700">
-              <span className="inline-flex items-center px-3 py-1 bg-white/95 rounded-full border border-slate-200/80 shadow-xs">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 pt-1 text-[11px] sm:text-xs md:text-sm font-medium text-slate-700">
+              <span className="inline-flex items-center px-2.5 sm:px-3 py-0.5 sm:py-1 bg-white/95 rounded-full border border-slate-200/80 shadow-xs">
                 Minimal Upfront Cost
               </span>
               <span className="text-[#00BFFF] font-bold">·</span>
-              <span className="inline-flex items-center px-3 py-1 bg-white/95 rounded-full border border-slate-200/80 shadow-xs">
+              <span className="inline-flex items-center px-2.5 sm:px-3 py-0.5 sm:py-1 bg-white/95 rounded-full border border-slate-200/80 shadow-xs">
                 We Win When You Win
               </span>
               <span className="text-[#00BFFF] font-bold">·</span>
-              <span className="inline-flex items-center px-3 py-1 bg-white/95 rounded-full border border-slate-200/80 shadow-xs">
+              <span className="inline-flex items-center px-2.5 sm:px-3 py-0.5 sm:py-1 bg-white/95 rounded-full border border-slate-200/80 shadow-xs">
                 Just Results
               </span>
             </div>

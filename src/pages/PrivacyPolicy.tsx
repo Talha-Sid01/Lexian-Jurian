@@ -17,7 +17,7 @@ const PrivacyPolicy = () => {
       <Header />
       <main>
         <section className="py-24 bg-gradient-hero">
-          <div className="container mx-auto px-6">
+          <div className="container mx-auto px-4 sm:px-6">
             <Button 
               variant="ghost" 
               onClick={() => navigate('/')}
@@ -39,7 +39,7 @@ const PrivacyPolicy = () => {
         </section>
 
         <section className="py-20 bg-white">
-          <div className="container mx-auto px-6 max-w-4xl">
+          <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
             <div className="prose prose-lg max-w-none">
               <h2 className="text-3xl font-bold text-primary mb-4">1. Introduction</h2>
               <p className="text-muted-foreground mb-6">

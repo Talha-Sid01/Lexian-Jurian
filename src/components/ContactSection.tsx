@@ -116,7 +116,7 @@ const ContactSection = () => {
 
   return (
     <section id="contact" className="py-12 md:py-16 bg-gradient-hero">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 md:mb-12 scroll-animate">
           <h2 className="text-3xl sm:text-4xl font-bold text-primary-foreground mb-3 md:mb-4">
             Get Free Case Review Now
@@ -181,22 +181,21 @@ const ContactSection = () => {
               })}
             </div>
             
-            <Card className="p-6 bg-white/10 border-white/20 backdrop-blur-sm overflow-hidden">
+            <Card className="p-3 sm:p-5 md:p-6 bg-white/10 border-white/20 backdrop-blur-sm overflow-hidden">
               <iframe 
                 title="LEXIAN AND JURIAN Location on Google Maps"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.6534954005877!2d72.85682797585094!3d19.22375504707641!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8a07993db4599ecb%3A0x61c03eed9277e1a8!2sLEXIAN%20AND%20JURIAN!5e0!3m2!1sen!2sin!4v1730894500000!5m2!1sen!2sin"
                 width="100%"
-                height="400"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="rounded-lg"
+                className="rounded-lg w-full h-[260px] sm:h-[340px] md:h-[400px]"
               />
             </Card>
           </div>
 
-          <Card className="p-8 bg-white/95 backdrop-blur-sm scroll-animate">
+          <Card className="p-4 sm:p-6 md:p-8 bg-white/95 backdrop-blur-sm scroll-animate">
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className="text-sm font-medium text-foreground mb-2 block">

@@ -107,7 +107,7 @@ const PricingSection = () => {
 
   return (
     <section className="py-16 md:py-20 bg-muted/20" id="pricing">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 md:mb-12 scroll-animate">
           <Badge className="mb-3 bg-primary/10 text-primary border-primary/20 text-xs sm:text-sm px-4 py-1">
             Legal Plans
@@ -151,7 +151,7 @@ const PricingSection = () => {
                 </div>
               </CardHeader>
               
-              <CardContent className="pt-0 pb-6 px-6">
+              <CardContent className="pt-0 pb-6 px-4 sm:px-6">
                 <ul className="space-y-2.5 mb-6">
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start gap-2.5">
@@ -177,7 +177,7 @@ const PricingSection = () => {
 
         <div className="mt-12 md:mt-14 scroll-animate max-w-5xl mx-auto">
           <Card className="glare-effect bg-gradient-primary text-white rounded-2xl">
-            <CardContent className="p-8 md:p-10 text-center">
+            <CardContent className="p-5 sm:p-8 md:p-10 text-center">
               <h3 className="text-2xl md:text-3xl font-bold mb-2">Premium Consultation</h3>
               <p className="text-sm md:text-base opacity-90 mb-6">
                 Need a custom solution? Let's discuss your specific requirements.

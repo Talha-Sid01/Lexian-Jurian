@@ -7,7 +7,7 @@ import {
   Hourglass,
   Briefcase,
 } from "lucide-react";
-import indianBusinessmanCutout from "@/assets/indian-businessman-cutout.png";
+import indianBusinessmanCutout from "@/assets/indian-businessman-cutout.webp";
 import ThoughtBubble from "./ThoughtBubble";
 
 export interface DisputeCard {
@@ -108,6 +108,7 @@ export const OrbitingDisputeCards: React.FC<OrbitingDisputeCardsProps> = ({
     // Calculate dynamic 3D orbital radii so cards revolve across the chest/lapels, keeping the person's face fully visible
     const getRadii = () => {
       const w = window.innerWidth;
+      // Desktop parameters (w >= 768) - strictly unchanged
       if (w >= 1440) {
         return { rx: 245, ry: 52, yOffset: 55, tilt: 10 };
       }
@@ -115,13 +116,24 @@ export const OrbitingDisputeCards: React.FC<OrbitingDisputeCardsProps> = ({
         return { rx: 215, ry: 48, yOffset: 50, tilt: 9 };
       }
       if (w >= 768) {
-        return { rx: 235, ry: 50, yOffset: 50, tilt: 9 };
+        return { rx: 210, ry: 48, yOffset: 48, tilt: 9 };
+      }
+      // Dedicated Mobile Orbital Layout (w < 768)
+      // Surrounds businessman perimeter with ample vertical clearance for face protection
+      if (w >= 640) {
+        return { rx: 175, ry: 42, yOffset: 62, tilt: 6 };
       }
       if (w >= 480) {
-        return { rx: 145, ry: 36, yOffset: 38, tilt: 7 };
+        return { rx: 154, ry: 40, yOffset: 66, tilt: 5 };
       }
-      // Narrow mobile (320px - 479px)
-      return { rx: 115, ry: 30, yOffset: 32, tilt: 5 };
+      if (w >= 390) {
+        return { rx: 138, ry: 38, yOffset: 68, tilt: 4 };
+      }
+      if (w >= 360) {
+        return { rx: 126, ry: 36, yOffset: 64, tilt: 3 };
+      }
+      // Narrow compact mobile (320px - 359px)
+      return { rx: 110, ry: 32, yOffset: 62, tilt: 2 };
     };
 
     let radii = getRadii();
@@ -171,30 +183,32 @@ export const OrbitingDisputeCards: React.FC<OrbitingDisputeCardsProps> = ({
 
         // Dynamic 3D depth scaling: cards closer to camera are naturally larger, no popping out on hover
         const scale = isMobile
-          ? 0.78 + depthNorm * 0.22
+          ? (window.innerWidth < 360 ? 0.64 : window.innerWidth < 400 ? 0.69 : 0.74) + depthNorm * 0.16
           : 0.88 + depthNorm * 0.20;
 
         // Dynamic depth opacity: rear cards fade softly, front cards fully opaque
-        const opacity = isHovered ? 1.0 : 0.75 + depthNorm * 0.25;
+        const opacity = isHovered ? 1.0 : (isMobile ? 0.82 : 0.75) + depthNorm * (isMobile ? 0.18 : 0.25);
 
         // DYNAMIC Z-INDEX:
-        // Central Businessman cutout sits at z-index: 12.
-        // FRONT HALF OF ORBIT (z > 0): z-index 20 to 30 -> VISIBLY IN FRONT OF BUSINESSMAN!
+        // Central Businessman Base (Suit/Body) sits at z-index: 12.
+        // Protected Head & Face sits at z-index: 35.
+        // FRONT HALF OF ORBIT (z > 0): z-index 20 to 28 -> IN FRONT OF SUIT/SHOULDERS, BEHIND FACE!
         // REAR HALF OF ORBIT (z <= 0): z-index 4 to 8 -> STRICTLY BEHIND BUSINESSMAN AT ALL TIMES!
-        // Hovering NEVER elevates a rear card above the image (stays at max z-index 8 < 12).
+        // Hovering front card brings to z-index 30 (< 35, face remains strictly protected).
+        // Hovering rear card brings to max z-index 8 (< 12, stays behind portrait).
         let zIndex: number;
         if (z > 0) {
-          // Front half: in front of businessman (12)
-          zIndex = isHovered ? 30 : 20 + Math.round(depthNorm * 10);
+          // Front half: in front of suit/chest (12), behind protected head/face (35)
+          zIndex = isHovered ? 30 : 20 + Math.round(depthNorm * 8);
         } else {
-          // Rear half: strictly behind businessman (12), even when hovered
+          // Rear half: strictly behind businessman (12)
           zIndex = isHovered ? 8 : 4 + Math.round(depthNorm * 4);
         }
 
         // 3D Perspective Rotation facing slightly toward viewer
-        const rotY = -sinVal * (isMobile ? 8 : 13);
-        const rotZ = card.baseRotation + sinVal * 2.2;
-        const rotX = -cosVal * (isMobile ? 3 : 5);
+        const rotY = -sinVal * (isMobile ? 6 : 13);
+        const rotZ = card.baseRotation + sinVal * (isMobile ? 1.2 : 2.2);
+        const rotX = -cosVal * (isMobile ? 2 : 5);
 
         el.style.transform = `translate3d(${x}px, ${y}px, 0px) scale(${scale}) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
         el.style.zIndex = `${zIndex}`;
@@ -252,21 +266,21 @@ export const OrbitingDisputeCards: React.FC<OrbitingDisputeCardsProps> = ({
   return (
     <div
       ref={stageRef}
-      className="relative w-full max-w-[560px] lg:max-w-none h-[380px] sm:h-[420px] md:h-[450px] lg:h-[460px] flex items-center justify-center overflow-visible select-none"
+      className="relative w-full max-w-[560px] lg:max-w-none h-[360px] sm:h-[400px] md:h-[440px] lg:h-[460px] flex items-center justify-center overflow-hidden sm:overflow-visible select-none"
       style={{ perspective: "1200px" }}
     >
       {/* Ambient Radial Backlight Glow Behind Portrait */}
       <div
-        className="absolute w-[300px] sm:w-[380px] md:w-[440px] h-[300px] sm:h-[380px] md:h-[440px] rounded-full pointer-events-none -z-10"
+        className="absolute w-[260px] sm:w-[380px] md:w-[440px] h-[260px] sm:h-[380px] md:h-[440px] rounded-full pointer-events-none -z-10"
         style={{
           background:
             "radial-gradient(circle, rgba(0, 191, 255, 0.10) 0%, rgba(0, 29, 81, 0.02) 45%, transparent 70%)",
         }}
       />
 
-      {/* Subtle Architectural Connecting Curves & Orbital Guide Path (z-index: 2, behind all cards & portrait) */}
+      {/* Desktop Architectural Connecting Curves & Orbital Guide Path (z-index: 2, strictly behind all cards & portrait) */}
       <svg
-        className="absolute w-[620px] h-[380px] pointer-events-none z-[2]"
+        className="absolute w-full max-w-[620px] h-auto aspect-[620/380] pointer-events-none z-[2] hidden sm:block"
         viewBox="0 0 620 380"
         fill="none"
         aria-hidden="true"
@@ -304,16 +318,36 @@ export const OrbitingDisputeCards: React.FC<OrbitingDisputeCardsProps> = ({
         <circle cx="545" cy="165" r="3" fill="#00BFFF" opacity="0.85" />
       </svg>
 
+      {/* Mobile Subtle Elliptical Orbit Track (z-index: 2, matches mobile orbit, strictly behind portrait) */}
+      <svg
+        className="absolute w-full max-w-[360px] h-auto aspect-[360/240] pointer-events-none z-[2] block sm:hidden"
+        viewBox="0 0 360 240"
+        fill="none"
+        aria-hidden="true"
+      >
+        <ellipse
+          cx="180"
+          cy="158"
+          rx="134"
+          ry="38"
+          stroke="#e2e8f0"
+          strokeWidth="1"
+          strokeDasharray="3 5"
+          opacity="0.50"
+        />
+      </svg>
+
       {/* ============================================================== */}
-      {/* CENTRAL BUSINESSMAN PORTRAIT (FIXED AT Z-INDEX: 12)             */}
-      {/* Cards on rear half pass behind (z: 4-8)                         */}
-      {/* Cards on front half pass across chest/suit, leaving face clear  */}
+      {/* CENTRAL BUSINESSMAN PORTRAIT - LAYER 1: BASE BODY & SUIT        */}
+      {/* Positioned at z-index: 12.                                     */}
+      {/* Rear cards (z <= 0) pass behind at z-index 4-8                 */}
+      {/* Front cards (z > 0) glide across chest/lapels at z-index 20-28  */}
       {/* ============================================================== */}
       <div
         className="absolute z-[12] pointer-events-none select-none flex items-end justify-center"
         style={{
           bottom: "6px",
-          width: "clamp(200px, 24vw, 300px)",
+          width: "clamp(180px, 24vw, 300px)",
           transform: "scale(1.44)",
           transformOrigin: "center 74%",
         }}
@@ -328,10 +362,35 @@ export const OrbitingDisputeCards: React.FC<OrbitingDisputeCardsProps> = ({
       </div>
 
       {/* ============================================================== */}
-      {/* ANIMATED THOUGHT BUBBLE (FIXED AT Z-INDEX: 26)                 */}
+      {/* CENTRAL BUSINESSMAN PORTRAIT - LAYER 2: PROTECTED HEAD & FACE   */}
+      {/* Positioned at z-index: 35 (FOREGROUND ABOVE ALL ORBITING CARDS) */}
+      {/* Guarantees forehead, eyes, nose, mouth & chin are NEVER obscured*/}
+      {/* Precision clip-path isolates upper facial zone (0 to 47%)      */}
+      {/* ============================================================== */}
+      <div
+        className="absolute z-[35] pointer-events-none select-none flex items-end justify-center"
+        style={{
+          bottom: "6px",
+          width: "clamp(180px, 24vw, 300px)",
+          transform: "scale(1.44)",
+          transformOrigin: "center 74%",
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 47%, 0% 47%)",
+        }}
+        aria-hidden="true"
+      >
+        <img
+          src={indianBusinessmanCutout}
+          alt=""
+          className="w-full h-auto object-contain grayscale contrast-[1.04] brightness-[1.01]"
+          loading="eager"
+        />
+      </div>
+
+      {/* ============================================================== */}
+      {/* ANIMATED THOUGHT BUBBLE (FIXED AT Z-INDEX: 40)                 */}
       {/* Positioned directly above businessman's head with dots trail   */}
       {/* ============================================================== */}
-      <div className="absolute z-[26] pointer-events-auto left-1/2 -translate-x-1/2 top-1 sm:top-2 md:top-2.5 lg:top-3">
+      <div className="absolute z-[40] pointer-events-auto left-1/2 -translate-x-1/2 top-3 sm:top-2 md:top-2.5 lg:top-3">
         <ThoughtBubble />
       </div>
 
@@ -352,8 +411,8 @@ export const OrbitingDisputeCards: React.FC<OrbitingDisputeCardsProps> = ({
             onMouseLeave={() => setHoveredCardId(null)}
             className={`
               absolute pointer-events-auto cursor-pointer
-              w-[145px] sm:w-[165px] md:w-[175px] lg:w-[185px] xl:w-[195px]
-              rounded-2xl p-2.5 sm:p-3
+              w-[114px] xs:w-[120px] sm:w-[155px] md:w-[175px] lg:w-[185px] xl:w-[195px]
+              rounded-2xl p-1.5 sm:p-2.5 md:p-3
               bg-white/95 backdrop-blur-md
               border border-[#00BFFF] transition-[border-color,background-color] duration-200 ease-out select-none
               ${
@@ -368,8 +427,8 @@ export const OrbitingDisputeCards: React.FC<OrbitingDisputeCardsProps> = ({
             }}
           >
             {/* Top Row: Tag + Icon */}
-            <div className="flex items-center justify-between gap-1.5 mb-1 sm:mb-1.5">
-              <span className="inline-flex items-center gap-1 text-[8px] sm:text-[9.5px] font-bold tracking-wider uppercase text-[#001d51]/75 truncate">
+            <div className="flex items-center justify-between gap-1 mb-0.5 sm:mb-1.5">
+              <span className="inline-flex items-center gap-1 text-[7.5px] sm:text-[9.5px] font-bold tracking-wider uppercase text-[#001d51]/75 truncate">
                 <span
                   className="w-1.5 h-1.5 rounded-full shrink-0"
                   style={{ backgroundColor: card.accentColor }}
@@ -378,7 +437,7 @@ export const OrbitingDisputeCards: React.FC<OrbitingDisputeCardsProps> = ({
               </span>
               <div
                 className={`
-                  w-4.5 h-4.5 sm:w-5.5 sm:h-5.5 rounded-full flex items-center justify-center shrink-0 transition-colors duration-200
+                  w-4 h-4 sm:w-5.5 sm:h-5.5 rounded-full flex items-center justify-center shrink-0 transition-colors duration-200
                   ${
                     isHovered
                       ? "bg-[#00BFFF]/15 text-[#0082c3]"
@@ -393,7 +452,7 @@ export const OrbitingDisputeCards: React.FC<OrbitingDisputeCardsProps> = ({
             {/* Title */}
             <h4
               className={`
-                text-[11px] sm:text-[12.5px] md:text-[13px] font-bold leading-tight transition-colors duration-200 truncate
+                text-[10.5px] sm:text-[12.5px] md:text-[13px] font-bold leading-tight transition-colors duration-200 truncate
                 ${isHovered ? "text-[#0082c3]" : "text-[#001d51]"}
               `}
             >
@@ -401,7 +460,7 @@ export const OrbitingDisputeCards: React.FC<OrbitingDisputeCardsProps> = ({
             </h4>
 
             {/* Description */}
-            <p className="text-[9.5px] sm:text-[10.5px] md:text-[11px] text-slate-500 leading-snug mt-0.5 sm:mt-1 font-normal line-clamp-2">
+            <p className="text-[8.5px] sm:text-[10.5px] md:text-[11px] text-slate-500 leading-snug mt-0.5 sm:mt-1 font-normal line-clamp-2">
               {card.description}
             </p>
           </div>

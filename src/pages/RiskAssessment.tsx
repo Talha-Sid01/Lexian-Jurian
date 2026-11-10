@@ -49,7 +49,7 @@ const RiskAssessment = () => {
       <Header />
       <main>
         <section className="py-24 bg-gradient-hero">
-          <div className="container mx-auto px-6">
+          <div className="container mx-auto px-4 sm:px-6">
             <Button 
               variant="ghost" 
               onClick={() => navigate('/')}
@@ -71,7 +71,7 @@ const RiskAssessment = () => {
         </section>
 
         <section className="py-20 bg-white">
-          <div className="container mx-auto px-6">
+          <div className="container mx-auto px-4 sm:px-6">
             <div className="max-w-4xl mx-auto mb-16 text-center">
               <h2 className="text-4xl font-bold text-primary mb-6">
                 Why Risk Assessment Matters

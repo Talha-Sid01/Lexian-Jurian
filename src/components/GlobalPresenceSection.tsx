@@ -123,7 +123,7 @@ export const GlobalPresenceSection: React.FC = () => {
           
 
           {/* SVG Canvas for 3D Embossed Continents & Markers */}
-          <div className="relative w-full aspect-[2/1] min-h-[300px] max-h-[640px] mt-4">
+          <div className="relative w-full aspect-[2/1] min-h-[210px] sm:min-h-[280px] md:min-h-[340px] max-h-[640px] mt-4">
             <svg
               viewBox="0 20 1000 420"
               className="w-full h-full"
@@ -270,6 +270,9 @@ export const GlobalPresenceSection: React.FC = () => {
                       onMouseEnter={() => setHoveredCountryId(dest.id)}
                       onMouseLeave={() => setHoveredCountryId(null)}
                     >
+                      {/* Touch target hit area for effortless mobile tapping */}
+                      <circle cx={dest.x} cy={dest.y} r={18} fill="transparent" />
+
                       {/* Connecting stem from pin to label */}
                       <line
                         x1={dest.x}

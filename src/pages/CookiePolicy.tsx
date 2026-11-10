@@ -22,7 +22,7 @@ const CookiePolicy = () => {
         {/* Hero Section */}
         <section className="py-20 md:py-24 bg-gradient-hero relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(0,191,255,0.12)_0%,transparent_60%)] pointer-events-none" />
-          <div className="container mx-auto px-6 relative z-10">
+          <div className="container mx-auto px-4 sm:px-6 relative z-10">
             <Button
               variant="ghost"
               onClick={() => navigate("/")}
@@ -54,7 +54,7 @@ const CookiePolicy = () => {
 
         {/* Content Section */}
         <section className="py-16 md:py-20 bg-white">
-          <div className="container mx-auto px-6 max-w-4xl">
+          <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
             <div className="space-y-12 text-slate-700 leading-relaxed">
               
               {/* 1. Introduction */}

@@ -191,7 +191,7 @@ const ProcessJourneySection: React.FC = () => {
         <div className="relative max-w-3xl lg:max-w-4xl mx-auto">
           {/* Vertical Timeline Track Line */}
           <div
-            className="absolute left-[26px] sm:left-[31px] md:left-[35px] top-[32px] bottom-[32px] w-[2px] pointer-events-none"
+            className="absolute left-[22px] sm:left-[28px] md:left-[35px] top-[28px] sm:top-[32px] bottom-[28px] sm:bottom-[32px] w-[2px] pointer-events-none"
             aria-hidden="true"
           >
             {/* Background inactive line */}
@@ -212,7 +212,7 @@ const ProcessJourneySection: React.FC = () => {
           </div>
 
           {/* Timeline Step Items */}
-          <div className="space-y-6 sm:space-y-8 md:space-y-10">
+          <div className="space-y-5 sm:space-y-8 md:space-y-10">
             {STEPS.map((step, idx) => {
               const isStepActive = prefersReducedMotion || activeStep >= idx + 1;
               const delayMs = prefersReducedMotion ? 0 : idx * 180;
@@ -220,7 +220,7 @@ const ProcessJourneySection: React.FC = () => {
               return (
                 <div
                   key={step.number}
-                  className={`relative flex items-start gap-4 sm:gap-6 md:gap-8 transition-all duration-700 ease-out ${
+                  className={`relative flex items-start gap-3 sm:gap-6 md:gap-8 transition-all duration-700 ease-out ${
                     isStepActive
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-8"
@@ -232,7 +232,7 @@ const ProcessJourneySection: React.FC = () => {
                   {/* Numbered Cyan Circle Indicator */}
                   <div className="relative z-10 flex-shrink-0 flex items-center justify-center">
                     <div
-                      className={`w-[52px] h-[52px] sm:w-[62px] sm:h-[62px] md:w-[70px] md:h-[70px] rounded-full flex items-center justify-center font-sans font-bold text-base sm:text-lg md:text-xl transition-all duration-500 ease-out ${
+                      className={`w-[44px] h-[44px] sm:w-[56px] sm:h-[56px] md:w-[70px] md:h-[70px] rounded-full flex items-center justify-center font-sans font-bold text-sm sm:text-lg md:text-xl transition-all duration-500 ease-out ${
                         isStepActive
                           ? "bg-[#00BFFF] text-[#001d51] shadow-md scale-100"
                           : "bg-[#031d4d] text-slate-400 border border-white/20 scale-95"
@@ -254,7 +254,7 @@ const ProcessJourneySection: React.FC = () => {
 
                   {/* Process Card to the Right */}
                   <div
-                    className={`flex-1 rounded-2xl p-5 sm:p-6 md:p-8 bg-[#031d4d]/80 backdrop-blur-md border transition-all duration-300 ease-out group ${
+                    className={`flex-1 rounded-2xl p-4 sm:p-6 md:p-8 bg-[#031d4d]/80 backdrop-blur-md border transition-all duration-300 ease-out group ${
                       isStepActive
                         ? "border-white/10 shadow-lg hover:border-[#00BFFF]/40 hover:-translate-y-0.5"
                         : "border-white/10 opacity-70"

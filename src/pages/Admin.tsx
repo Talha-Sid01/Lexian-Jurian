@@ -16,7 +16,7 @@ const Admin = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     heading: "",
     subheading: "",
@@ -76,7 +76,7 @@ const Admin = () => {
 
     try {
       const content = JSON.stringify({ sections });
-      
+
       const response = await fetch('https://script.google.com/macros/s/AKfycbzoR8djwnvKksctY5kKm9_w_D50WeP-O6wTB5NVnklC8UktMuniS3NECCqw62c3a9y8GQ/exec', {
         method: 'POST',
         mode: 'no-cors',
@@ -154,7 +154,7 @@ const Admin = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className="container mx-auto px-6 pt-10 pb-20">
+      <div className="container mx-auto px-4 sm:px-6 pt-8 sm:pt-10 pb-16 sm:pb-20">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <h1 className="text-4xl font-bold text-primary mb-4">Admin Panel</h1>
@@ -329,9 +329,9 @@ const Admin = () => {
                   <Button type="submit" disabled={isSubmitting} className="flex-1">
                     {isSubmitting ? "Adding..." : "Add Proven Result"}
                   </Button>
-                  <Button 
-                    type="button" 
-                    variant="outline" 
+                  <Button
+                    type="button"
+                    variant="outline"
                     onClick={() => navigate('/proven-results')}
                   >
                     View All Results

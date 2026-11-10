@@ -160,33 +160,33 @@ const ProvenResults = () => {
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-2 md:gap-3 mb-5 md:mb-6">
-                      <div className="text-center p-3 md:p-4 bg-primary/5 rounded-lg">
-                        <Icon1 className="mx-auto mb-1 md:mb-2 h-4 w-4 text-primary" />
-                        <div className="font-bold text-primary text-sm md:text-lg">
+                    <div className="grid grid-cols-3 gap-1.5 sm:gap-2 md:gap-3 mb-5 md:mb-6">
+                      <div className="text-center p-2 sm:p-3 md:p-4 bg-primary/5 rounded-lg">
+                        <Icon1 className="mx-auto mb-1 md:mb-2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
+                        <div className="font-bold text-primary text-xs sm:text-sm md:text-base lg:text-lg truncate">
                           {result.value1}
                         </div>
-                        <div className="text-[10px] md:text-xs text-foreground/60 mt-1">
+                        <div className="text-[9px] sm:text-[10px] md:text-xs text-foreground/60 mt-0.5 sm:mt-1 truncate">
                           {result.cardTitle1}
                         </div>
                       </div>
 
-                      <div className="text-center p-3 md:p-4 bg-accent/10 rounded-lg">
-                        <Icon2 className="mx-auto mb-1 md:mb-2 h-4 w-4 text-accent" />
-                        <div className="font-bold text-accent text-sm md:text-lg">
+                      <div className="text-center p-2 sm:p-3 md:p-4 bg-accent/10 rounded-lg">
+                        <Icon2 className="mx-auto mb-1 md:mb-2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-accent" />
+                        <div className="font-bold text-accent text-xs sm:text-sm md:text-base lg:text-lg truncate">
                           {result.value2}
                         </div>
-                        <div className="text-[10px] md:text-xs text-foreground/60 mt-1">
+                        <div className="text-[9px] sm:text-[10px] md:text-xs text-foreground/60 mt-0.5 sm:mt-1 truncate">
                           {result.cardTitle2}
                         </div>
                       </div>
 
-                      <div className="text-center p-3 md:p-4 bg-green-100 rounded-lg">
-                        <Icon3 className="mx-auto mb-1 md:mb-2 h-4 w-4 text-green-600" />
-                        <div className="font-bold text-green-600 text-sm md:text-lg">
+                      <div className="text-center p-2 sm:p-3 md:p-4 bg-green-100 rounded-lg">
+                        <Icon3 className="mx-auto mb-1 md:mb-2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-600" />
+                        <div className="font-bold text-green-600 text-xs sm:text-sm md:text-base lg:text-lg truncate">
                           {result.value3}
                         </div>
-                        <div className="text-[10px] md:text-xs text-foreground/60 mt-1">
+                        <div className="text-[9px] sm:text-[10px] md:text-xs text-foreground/60 mt-0.5 sm:mt-1 truncate">
                           {result.cardTitle3}
                         </div>
                       </div>

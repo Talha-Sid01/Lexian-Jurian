@@ -37,7 +37,7 @@ const AboutSection = () => {
 
   return (
     <section id="about" className="py-16 md:py-24 bg-white text-slate-900 relative overflow-hidden select-none">
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         {/* ======================================================== */}
         {/* 2-COLUMN GRID: Left = Text Section, Right = 3D Globe     */}
         {/* ======================================================== */}
@@ -93,7 +93,7 @@ const AboutSection = () => {
             />
 
             {/* Orbital Type container */}
-            <div className="relative w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[480px] h-[320px] sm:h-[400px] lg:h-[460px] mx-auto flex items-center justify-center">
+            <div className="relative w-full max-w-[280px] sm:max-w-[420px] lg:max-w-[480px] h-[280px] sm:h-[400px] lg:h-[460px] mx-auto flex items-center justify-center">
               <OrbitalType />
             </div>
           </div>

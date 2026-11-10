@@ -189,13 +189,13 @@ const Header = () => {
 
         {/* Mobile Dropdown Menu */}
         {isMenuOpen && (
-          <div className="md:hidden mt-3 pt-3 pb-4 border-t border-slate-100 space-y-2 animate-fade-in-up">
+          <div className="md:hidden mt-3 pt-3 pb-4 border-t border-slate-100 space-y-2 animate-fade-in-up max-h-[calc(100vh-120px)] overflow-y-auto">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
                 className={`
-                  block w-full text-left py-2 px-3 text-base font-medium rounded-lg transition-colors
+                  block w-full text-left py-2.5 px-3.5 text-base font-medium rounded-lg transition-colors
                   ${activeSection === item.id ? "bg-slate-100 text-[#001d51] font-semibold" : "text-slate-600 hover:bg-slate-50 hover:text-[#00BFFF]"}
                 `}
               >

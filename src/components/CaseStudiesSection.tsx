@@ -168,9 +168,13 @@ const CaseStudiesSection: React.FC = () => {
   const isTablet = windowWidth >= 640 && windowWidth < 1024;
   const isSmallDesktop = windowWidth >= 1024 && windowWidth < 1360;
 
-  // Folder scale: 1.25x more bigger as requested (desktop: 1.53 * 1.25 = 1.91)
+  // Responsive folder scale: preserves 1.91 on desktop while preventing clipping on smaller viewports
   const folderSize = isMobile
-    ? 1.54
+    ? windowWidth < 380
+      ? 1.24
+      : windowWidth < 480
+        ? 1.36
+        : 1.48
     : isTablet
       ? 1.70
       : isSmallDesktop
@@ -273,18 +277,18 @@ const CaseStudiesSection: React.FC = () => {
       if (folderId === "arbitration") {
         // Behind on the left, tab positioned on left and clearly visible
         const offsetLeft = isMobile
-          ? -68
+          ? -Math.min(62, Math.floor(windowWidth * 0.15))
           : isTablet
             ? -112
             : isSmallDesktop
               ? -132
               : -148;
-        const offsetUp = isMobile ? -18 : isTablet ? -25 : -32;
+        const offsetUp = isMobile ? -16 : isTablet ? -25 : -32;
         return {
           x: offsetLeft,
           y: offsetUp,
           z: 10,
-          rotate: isMobile ? -2.5 : -3.5,
+          rotate: isMobile ? -2.2 : -3.5,
           scale: 0.96,
           opacity: 0.98,
           filter: "drop-shadow(0 14px 22px rgba(0, 29, 81, 0.13))",
@@ -294,18 +298,18 @@ const CaseStudiesSection: React.FC = () => {
       if (folderId === "corporate") {
         // Behind on the right, tab positioned on right and clearly visible
         const offsetRight = isMobile
-          ? 68
+          ? Math.min(62, Math.floor(windowWidth * 0.15))
           : isTablet
             ? 112
             : isSmallDesktop
               ? 132
               : 148;
-        const offsetUp = isMobile ? -18 : isTablet ? -25 : -32;
+        const offsetUp = isMobile ? -16 : isTablet ? -25 : -32;
         return {
           x: offsetRight,
           y: offsetUp,
           z: 10,
-          rotate: isMobile ? 2.5 : 3.5,
+          rotate: isMobile ? 2.2 : 3.5,
           scale: 0.96,
           opacity: 0.98,
           filter: "drop-shadow(0 14px 22px rgba(0, 29, 81, 0.13))",
@@ -322,10 +326,10 @@ const CaseStudiesSection: React.FC = () => {
         // Mobile compact vertical stack with accessible tabs & zero overflow
         const yOffset =
           folderId === "arbitration"
-            ? -105
+            ? -88
             : folderId === "commercial"
               ? 0
-              : 105;
+              : 88;
         const zIdx =
           folderId === "arbitration"
             ? 10
@@ -386,13 +390,14 @@ const CaseStudiesSection: React.FC = () => {
 
       // Inactive folders step aside to allow full breathing room for fanning
       if (isMobile) {
+        const sideOffset = Math.min(72, Math.floor(windowWidth * 0.18));
         return {
-          x: folderId === "arbitration" ? -85 : 85,
-          y: 190,
+          x: folderId === "arbitration" ? -sideOffset : sideOffset,
+          y: 175,
           z: 5,
           rotate: 0,
-          scale: 0.75,
-          opacity: 0.18,
+          scale: 0.72,
+          opacity: 0.2,
           filter: "none",
           zIndex: 5,
         };
@@ -538,8 +543,8 @@ const CaseStudiesSection: React.FC = () => {
         <div
           className={`relative flex justify-center items-center overflow-visible select-none transition-[min-height,padding] duration-200 ease-out ${
             archiveState === "expanded" && isMobile
-              ? "min-h-[440px] py-3 sm:py-4"
-              : "min-h-[390px] sm:min-h-[430px] md:min-h-[470px] py-1.5 sm:py-2 md:py-3"
+              ? "min-h-[410px] sm:min-h-[440px] py-3 sm:py-4"
+              : "min-h-[340px] sm:min-h-[400px] md:min-h-[470px] py-1.5 sm:py-2 md:py-3"
           }`}
         >
           {FOLDERS.map((folder) => {

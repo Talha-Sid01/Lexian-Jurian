@@ -302,7 +302,7 @@ const CommercialDisputeEnquirySection: React.FC = () => {
           {/* 1. LEFT COLUMN — ENQUIRY FORM (Approx 48% on desktop)     */}
           {/* ======================================================== */}
           <div className="w-full lg:w-[48%] xl:w-[47%] shrink-0 order-2 lg:order-1">
-            <div className="bg-white rounded-tl-2xl md:rounded-tl-3xl rounded-tr-none rounded-br-2xl md:rounded-br-3xl rounded-bl-none shadow-xl shadow-slate-200/60 border-2 sm:border-[3px] border-[#00BFFF] p-5 sm:p-6 lg:p-6 relative">
+            <div className="bg-white rounded-tl-2xl md:rounded-tl-3xl rounded-tr-none rounded-br-2xl md:rounded-br-3xl rounded-bl-none shadow-xl shadow-slate-200/60 border-2 sm:border-[3px] border-[#00BFFF] p-4 sm:p-6 lg:p-7 relative">
               
               {/* Form Card Header */}
               <div className="mb-3.5 pb-3 border-b border-slate-100">

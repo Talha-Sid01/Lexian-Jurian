@@ -61,8 +61,8 @@ const Footer = () => {
 
   return (
     <footer className="bg-primary text-primary-foreground">
-      <div className="container mx-auto px-6 py-16">
-        <div className="grid lg:grid-cols-3 gap-12">
+      <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        <div className="grid lg:grid-cols-3 gap-8 md:gap-12">
           <div className="lg:col-span-1">
             <div className="mb-6">
               <div 
@@ -131,41 +131,41 @@ By accessing or using this website or services, you agree to our Terms & Conditi
         </div>
         <Separator className="my-12 bg-primary-foreground/20" />
 
-        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <div className="text-primary-foreground/70 text-sm">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="text-primary-foreground/70 text-xs sm:text-sm text-center md:text-left">
             © {currentYear} Lexian & Jurian. All rights reserved.
           </div>
 
-          <div className="flex items-center space-x-6">
-            <div className="flex space-x-4">
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full md:w-auto">
+            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
               <a href={CONTACT_CONFIG.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <Button variant="ghost" size="sm" className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10">
+                <Button variant="ghost" size="sm" className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10 h-8 w-8 p-0">
                   <Linkedin className="h-4 w-4" />
                 </Button>
               </a>
               <a href={CONTACT_CONFIG.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <Button variant="ghost" size="sm" className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10">
+                <Button variant="ghost" size="sm" className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10 h-8 w-8 p-0">
                   <Instagram className="h-4 w-4" />
                 </Button>
               </a>
               <a href={CONTACT_CONFIG.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                <Button variant="ghost" size="sm" className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10">
+                <Button variant="ghost" size="sm" className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10 h-8 w-8 p-0">
                   <Facebook className="h-4 w-4" />
                 </Button>
               </a>
               <a href={CONTACT_CONFIG.social.twitter} target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                <Button variant="ghost" size="sm" className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10">
+                <Button variant="ghost" size="sm" className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10 h-8 w-8 p-0">
                   <Twitter className="h-4 w-4" />
                 </Button>
               </a>
               <a href="mailto:info@lexianandjurian.com" aria-label="Email">
-                <Button variant="ghost" size="sm" className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10">
+                <Button variant="ghost" size="sm" className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10 h-8 w-8 p-0">
                   <Mail className="h-4 w-4" />
                 </Button>
               </a>
             </div>
 
-            <div className="flex flex-wrap gap-4 text-sm text-primary-foreground/70">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 text-xs sm:text-sm text-primary-foreground/70">
               <button onClick={() => navigate('/privacy-policy')} className="hover:text-primary-foreground transition-colors">Privacy Policy</button>
               <button onClick={() => navigate('/terms-of-service')} className="hover:text-primary-foreground transition-colors">Terms of Service</button>
               <button onClick={() => navigate('/cookie-policy')} className="hover:text-primary-foreground transition-colors">Cookie Policy</button>
